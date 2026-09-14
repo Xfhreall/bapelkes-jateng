@@ -918,7 +918,7 @@ a {
 }
 
 .site-header--solid .nav-links .menu-item-has-children > a::after {
-	filter: invert(23%) sepia(10%) saturate(1200%) hue-rotate(178deg) brightness(95%);
+	filter: brightness(0) opacity(0.62);
 }
 
 /* ---------- Arsip Publikasi ---------- */
@@ -4010,9 +4010,11 @@ html {
 		position: static;
 		transform: none;
 		flex-direction: row;
+		/* Tanpa wrap, panel menu selebar 100% ikut berdesakan di baris logo. */
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: 16px;
+		gap: 0 16px;
 		padding: 12px 16px;
 		background: var(--bapelkes-white);
 		border-bottom: 1px solid #eaecf0;
@@ -4035,6 +4037,7 @@ html {
 		display: none;
 		width: 100%;
 		order: 3;
+		flex-basis: 100%;
 	}
 
 	.site-nav.is-open {
@@ -4053,13 +4056,27 @@ html {
 	}
 
 	.nav-links a,
-	.site-header--solid .nav-links a {
+	.site-header--solid .nav-links a,
+	.nav-links .current-menu-item > a,
+	.nav-links .is-active > a,
+	.site-header--solid .nav-links .is-active > a {
 		justify-content: space-between;
 		/* 14px atas-bawah menjaga tinggi sentuh tetap 44px walau tanpa media pointer. */
 		padding: 14px 0;
 		min-height: 44px;
 		color: var(--bapelkes-text-primary);
 		font-size: 16px;
+	}
+
+	.nav-links .is-active > a,
+	.nav-links .current-menu-item > a {
+		font-weight: 700;
+	}
+
+	/* Panah dropdown memakai ikon putih; di panel terang perlu dibalik. */
+	.nav-links .menu-item-has-children > a::after,
+	.site-header--solid .nav-links .menu-item-has-children > a::after {
+		filter: brightness(0) opacity(0.62);
 	}
 
 	.mega-menu,
@@ -4354,5 +4371,86 @@ textarea:focus-visible {
 	.filter-pelatihan__check input {
 		width: 24px;
 		height: 24px;
+	}
+}
+
+/* Footer pada layar kecil: kolom dibuat grid dua lajur.
+   Lebar tetap dari desain (184/185/150px) membuat kolom menumpuk satu per
+   satu dan footer membengkak sampai 1238px. */
+@media (max-width: 900px) {
+	.site-footer {
+		height: auto;
+		padding: 40px 0 48px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Wordmark ada di awal markup; pada alur normal ia harus turun ke bawah.
+	   Keduanya perlu position relative agar tidak tertimbun latar absolut. */
+	.site-footer__inner {
+		order: 1;
+		position: relative;
+		z-index: 1;
+	}
+
+	.site-footer__wordmark {
+		order: 2;
+		position: relative;
+		z-index: 1;
+	}
+
+	.site-footer__inner {
+		position: static;
+		flex-direction: column;
+		gap: 32px;
+		padding: 0 16px;
+	}
+
+	.site-footer__nav {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: start;
+		gap: 28px 16px;
+		width: 100%;
+		padding: 0;
+	}
+
+	.site-footer__nav .footer-column:nth-child(1),
+	.site-footer__nav .footer-column:nth-child(2),
+	.site-footer__nav .footer-column:nth-child(3),
+	.site-footer__nav .footer-column {
+		width: auto;
+	}
+
+	.footer-column__title {
+		font-size: 18px;
+	}
+
+	.footer-column__links {
+		gap: 4px;
+	}
+
+	.site-footer__wordmark {
+		position: static;
+		transform: none;
+		margin-top: 32px;
+		font-size: clamp(56px, 20vw, 140px);
+		line-height: 1;
+		letter-spacing: -0.05em;
+		text-align: center;
+	}
+
+	.site-footer__bg {
+		top: 0;
+		height: 100%;
+	}
+}
+
+/* Di bawah 600px kolom dibuat satu lajur: dua lajur menyisakan rongga
+   besar karena tinggi tiap kolom berbeda. */
+@media (max-width: 600px) {
+	.site-footer__nav {
+		grid-template-columns: 1fr;
+		gap: 24px;
 	}
 }
