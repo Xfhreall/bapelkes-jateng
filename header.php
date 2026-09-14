@@ -13,9 +13,9 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="site-header">
+<header class="site-header<?php echo is_front_page() ? '' : ' site-header--solid'; ?>">
 	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-		<img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/logo.png' ) ); ?>"
+		<img src="<?php echo esc_url( get_theme_file_uri( is_front_page() ? 'assets/img/logo.png' : 'assets/img/logo-color.png' ) ); ?>"
 			alt="<?php bloginfo( 'name' ); ?>" width="110" height="25">
 	</a>
 
