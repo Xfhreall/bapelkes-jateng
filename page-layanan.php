@@ -198,51 +198,16 @@ $nama_bulan   = wp_date( 'F Y', $bulan->getTimestamp() );
 				</span>
 			</form>
 
-			<div class="jadwal">
-				<?php if ( ! $pelatihan ) : ?>
-					<p class="jadwal__kosong">
-						<?php esc_html_e( 'Tidak ada pelatihan pada bulan ini.', 'bapelkes' ); ?>
-					</p>
-				<?php endif; ?>
-
-				<?php
-				foreach ( $pelatihan as $item ) :
-					$mulai    = get_post_meta( $item->ID, '_bapelkes_mulai', true );
-					$selesai  = get_post_meta( $item->ID, '_bapelkes_selesai', true );
-					$angkatan = get_post_meta( $item->ID, '_bapelkes_angkatan', true );
-					$kampus   = wp_get_post_terms( $item->ID, 'kampus', array( 'fields' => 'names' ) );
-
-					$rentang = $mulai ? wp_date( 'j M', strtotime( $mulai ) ) : '';
-
-					if ( $selesai ) {
-						$rentang .= ' - ' . wp_date( 'j M Y', strtotime( $selesai ) );
-					} elseif ( $mulai ) {
-						$rentang = wp_date( 'j M Y', strtotime( $mulai ) );
-					}
-					?>
-					<a class="jadwal__baris" href="<?php echo esc_url( get_permalink( $item ) ); ?>">
-						<span class="jadwal__utama">
-							<span class="jadwal__judul"><?php echo esc_html( get_the_title( $item ) ); ?></span>
-							<span class="jadwal__tanggal">
-								<img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/calendar-table.svg' ) ); ?>"
-									alt="" width="20" height="20">
-								<?php echo esc_html( $rentang ); ?>
-							</span>
-							<img class="jadwal__panah"
-								src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/arrow-up-right.svg' ) ); ?>"
-								alt="" width="24" height="24">
-						</span>
-						<span class="jadwal__meta">
-							<span><?php echo esc_html( $kampus ? $kampus[0] : '' ); ?></span>
-							<?php if ( $angkatan ) : ?>
-								<img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/dot.svg' ) ); ?>"
-									alt="" width="4" height="4">
-								<span><?php echo esc_html( $angkatan ); ?></span>
-							<?php endif; ?>
-						</span>
-					</a>
-				<?php endforeach; ?>
-			</div>
+			<?php
+			get_template_part(
+				'template-parts/tabel',
+				'pelatihan',
+				array(
+					'items'  => $pelatihan,
+					'kosong' => __( 'Tidak ada pelatihan pada bulan ini.', 'bapelkes' ),
+				)
+			);
+			?>
 		</div>
 	</div>
 </main>

@@ -2495,3 +2495,32 @@ a {
 		justify-content: center;
 	}
 }
+
+.layanan__content--penuh {
+	width: 100%;
+}
+
+.jadwal__aksi {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-shrink: 0;
+}
+
+.jadwal__aksi span {
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+	background: var(--bapelkes-brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	white-space: nowrap;
+}
+
+.jadwal__aksi img {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
