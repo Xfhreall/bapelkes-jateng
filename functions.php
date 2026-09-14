@@ -4,6 +4,7 @@
  */
 
 require_once get_theme_file_path( 'inc/masukan.php' );
+require_once get_theme_file_path( 'inc/pelatihan.php' );
 
 function bapelkes_setup() {
 	add_theme_support( 'title-tag' );

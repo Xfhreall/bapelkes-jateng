@@ -1709,3 +1709,388 @@ a {
 		width: 100%;
 	}
 }
+
+/* ---------- Layanan: Kalender Pelatihan ---------- */
+
+.layanan {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 96px;
+	padding: 72px 12px 120px;
+	background: var(--bapelkes-white);
+}
+
+.layanan__body {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	width: 100%;
+}
+
+.layanan__sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	flex-shrink: 0;
+	padding: 16px;
+	border-radius: var(--bapelkes-radius-lg);
+	background: url("assets/img/kalender-sidebar.jpg") no-repeat center / cover;
+}
+
+.kalender,
+.filter-pelatihan {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 322px;
+	padding: 20px;
+	border: 1px solid #eaecf0;
+	border-radius: 16px;
+	background: var(--bapelkes-white);
+	filter: drop-shadow(0 4px 10px rgba(16, 24, 40, 0.05));
+}
+
+.kalender__header,
+.filter-pelatihan__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.kalender__bulan,
+.filter-pelatihan__judul {
+	margin: 0;
+	color: #1d2939;
+	font-family: var(--bapelkes-font-display);
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+}
+
+.kalender__nav {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.kalender__nav img,
+.jadwal__panah {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
+
+.kalender__garis {
+	width: 100%;
+	height: 1px;
+	margin: 0;
+	border: 0;
+	background: #eaecf0;
+}
+
+.kalender__grid {
+	display: grid;
+	grid-template-columns: repeat(7, 40px);
+	justify-content: space-between;
+	gap: 4px;
+}
+
+.kalender__weekday {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+}
+
+.kalender__day {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+}
+
+.kalender__day-number {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 100px;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+/* Hari mulainya pelatihan ditandai penuh; hari di tengah rentang cukup titik. */
+.kalender__day.is-mulai .kalender__day-number {
+	background: #fee6f3;
+}
+
+.kalender__day.is-rentang::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--bapelkes-brand-pink);
+	transform: translateX(-50%);
+}
+
+.filter-pelatihan__reset {
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+	background: var(--bapelkes-brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.filter-pelatihan__grup {
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.filter-pelatihan__grup legend {
+	padding: 0 0 13px;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.filter-pelatihan__baris {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.filter-pelatihan__check {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.filter-pelatihan__check input {
+	width: 20px;
+	height: 20px;
+	margin: 0;
+	accent-color: var(--bapelkes-brand-pink);
+}
+
+.filter-pelatihan__jumlah {
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.filter-pelatihan__submit {
+	border: 0;
+	cursor: pointer;
+}
+
+.layanan__content {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.layanan__toolbar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+}
+
+.search-form--lebar {
+	width: auto;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 46px;
+}
+
+.bulan-nav {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-shrink: 0;
+	padding: 4px;
+	border: 1px solid #eaecf0;
+	border-radius: 9999px;
+	background: var(--bapelkes-background-primary);
+}
+
+.bulan-nav__label {
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+}
+
+.bulan-nav__tombol {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px;
+	border-radius: 999px;
+}
+
+.bulan-nav__tombol--pasif {
+	background: #eaecf0;
+}
+
+.bulan-nav__tombol--aktif {
+	background: var(--bapelkes-brand-gradient);
+}
+
+.bulan-nav__tombol img {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
+
+.jadwal {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0 20px;
+	border: 1px solid #eaecf0;
+	border-radius: var(--bapelkes-radius-lg);
+	background: var(--bapelkes-background-primary);
+	filter: drop-shadow(0 4px 10px rgba(16, 24, 40, 0.05));
+}
+
+.jadwal__baris {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 16px 0;
+	border-bottom: 1px solid #eaecf0;
+}
+
+.jadwal__baris:last-child {
+	border-bottom: 0;
+}
+
+.jadwal__utama {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+}
+
+.jadwal__judul {
+	width: 520px;
+	flex-shrink: 1;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.jadwal__tanggal {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 188px;
+	flex-shrink: 0;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	line-height: 16px;
+}
+
+.jadwal__tanggal img {
+	display: block;
+	width: 20px;
+	height: 20px;
+}
+
+.jadwal__meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--bapelkes-text-secondary);
+	font-family: "Geist Mono", ui-monospace, monospace;
+	font-size: 14px;
+	line-height: 16px;
+}
+
+.jadwal__meta img {
+	display: block;
+	width: 4px;
+	height: 4px;
+}
+
+.jadwal__kosong {
+	margin: 0;
+	padding: 24px 0;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+}
+
+@media (max-width: 1200px) {
+	.layanan {
+		gap: 48px;
+		padding: 48px 24px 80px;
+	}
+
+	.layanan__body {
+		flex-direction: column;
+	}
+
+	.layanan__sidebar {
+		width: 100%;
+	}
+
+	.kalender,
+	.filter-pelatihan {
+		width: 100%;
+	}
+
+	.layanan__toolbar {
+		flex-wrap: wrap;
+	}
+
+	.jadwal__utama {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.jadwal__judul,
+	.jadwal__tanggal {
+		width: 100%;
+	}
+}
