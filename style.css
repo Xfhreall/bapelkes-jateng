@@ -4561,3 +4561,41 @@ textarea:focus-visible {
 		font-size: 13px;
 	}
 }
+
+/* ---------- Pita pratinjau ---------- */
+
+/* Ditempel di dasar layar, bukan di atas: navbar Beranda melayang di atas
+   hero, dan pita di atasnya akan menggeser seluruh tata letak yang justru
+   sedang ditinjau. */
+.pita-demo {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 60;
+	width: 100%;
+	margin: 0;
+	padding: 10px 16px;
+	background: rgba(16, 24, 40, 0.94);
+	color: #fff;
+	font-family: var(--bapelkes-font-display);
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 18px;
+	text-align: center;
+}
+
+body.mode-demo {
+	/* Ruang agar pita tidak menutupi bagian bawah footer. */
+	padding-bottom: 44px;
+}
+
+@media (max-width: 600px) {
+	.pita-demo {
+		font-size: 12px;
+		line-height: 16px;
+	}
+
+	body.mode-demo {
+		padding-bottom: 60px;
+	}
+}

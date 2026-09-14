@@ -129,3 +129,36 @@ function bapelkes_kampus() {
 		),
 	);
 }
+
+/**
+ * Pita penanda demo. Hanya tampil bila BAPELKES_DEMO aktif di wp-config,
+ * sehingga pemasangan produksi tidak pernah menampilkannya.
+ *
+ * Isi situs ini masih data contoh, bukan data resmi Bapelkes. Pita ini
+ * mencegah pengunjung menyangka halaman ini publikasi resmi.
+ */
+function bapelkes_pita_demo() {
+	if ( ! defined( 'BAPELKES_DEMO' ) || ! BAPELKES_DEMO || is_admin() ) {
+		return;
+	}
+
+	printf(
+		'<p class="pita-demo">%s</p>',
+		esc_html__( 'PRATINJAU PENGEMBANGAN — seluruh berita, nama peserta, sertifikat, dan angka di situs ini adalah data contoh, bukan data resmi Bapelkes Jateng.', 'bapelkes' )
+	);
+}
+add_action( 'wp_body_open', 'bapelkes_pita_demo', 1 );
+
+/**
+ * Menandai body saat mode demo, agar ruang untuk pita hanya disediakan
+ * ketika pitanya memang ada.
+ */
+function bapelkes_kelas_demo( $kelas ) {
+	if ( defined( 'BAPELKES_DEMO' ) && BAPELKES_DEMO ) {
+		$kelas[] = 'mode-demo';
+	}
+
+	return $kelas;
+}
+add_filter( 'body_class', 'bapelkes_kelas_demo' );
+
