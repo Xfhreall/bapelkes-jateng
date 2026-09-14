@@ -17,7 +17,9 @@ $status = bapelkes_pesan_masukan();
 	</div>
 
 	<div class="suara__panel">
+		<?php /* data-asal dipakai skrip untuk mengenali salinan statis di domain lain. */ ?>
 		<form class="masukan-form" method="post" enctype="multipart/form-data"
+			data-asal="<?php echo esc_attr( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?>"
 			action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="bapelkes_masukan">
 			<?php wp_nonce_field( 'bapelkes_masukan', 'bapelkes_masukan_nonce' ); ?>

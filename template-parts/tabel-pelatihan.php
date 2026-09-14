@@ -37,7 +37,8 @@ $kosong = $args['kosong'] ?? __( 'Tidak ada pelatihan.', 'bapelkes' );
 
 		list( $status_slug, $status_label ) = bapelkes_status_pelatihan( $item->ID );
 		?>
-		<a class="jadwal__baris" href="<?php echo esc_url( get_permalink( $item ) ); ?>">
+		<a class="jadwal__baris" href="<?php echo esc_url( get_permalink( $item ) ); ?>"
+			data-kampus="<?php echo esc_attr( implode( ' ', wp_get_post_terms( $item->ID, 'kampus', array( 'fields' => 'slugs' ) ) ) ); ?>">
 			<span class="jadwal__utama">
 				<span class="jadwal__judul"><?php echo esc_html( get_the_title( $item ) ); ?></span>
 

@@ -62,7 +62,7 @@ $dokumen = array_filter( array_map( 'absint', explode( ',', (string) bapelkes_ko
 // Dokumen ditampilkan dua halaman sekaligus, seperti tampilan berkas di desain.
 $dokumen_per_layar = 2;
 $dokumen_total     = max( 1, (int) ceil( count( $dokumen ) / $dokumen_per_layar ) );
-$dokumen_hal       = max( 1, min( $dokumen_total, isset( $_GET['doc'] ) ? absint( wp_unslash( $_GET['doc'] ) ) : 1 ) );
+$dokumen_hal       = max( 1, min( $dokumen_total, absint( bapelkes_nilai_rute( 'doc', 1 ) ) ) );
 $dokumen_tampil    = array_slice( $dokumen, ( $dokumen_hal - 1 ) * $dokumen_per_layar, $dokumen_per_layar );
 ?>
 
@@ -194,7 +194,7 @@ $dokumen_tampil    = array_slice( $dokumen, ( $dokumen_hal - 1 ) * $dokumen_per_
 				<?php if ( $dokumen_total > 1 ) : ?>
 					<nav class="paginasi" aria-label="<?php esc_attr_e( 'Halaman dokumen', 'bapelkes' ); ?>">
 						<?php if ( $dokumen_hal > 1 ) : ?>
-							<a class="paginasi__arah" href="<?php echo esc_url( add_query_arg( 'doc', $dokumen_hal - 1 ) ); ?>">
+							<a class="paginasi__arah" href="<?php echo esc_url( trailingslashit( get_permalink() ) . 'dokumen/' . ( $dokumen_hal - 1 ) . '/' ); ?>">
 								<img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/arrow-left.svg' ) ); ?>"
 									alt="" width="24" height="24">
 								<?php esc_html_e( 'Sebelumnya', 'bapelkes' ); ?>
@@ -212,7 +212,7 @@ $dokumen_tampil    = array_slice( $dokumen, ( $dokumen_hal - 1 ) * $dokumen_per_
 								<?php if ( $n === $dokumen_hal ) : ?>
 									<span class="paginasi__hal paginasi__hal--aktif"><?php echo esc_html( $n ); ?></span>
 								<?php else : ?>
-									<a class="paginasi__hal" href="<?php echo esc_url( add_query_arg( 'doc', $n ) ); ?>">
+									<a class="paginasi__hal" href="<?php echo esc_url( trailingslashit( get_permalink() ) . 'dokumen/' . $n . '/' ); ?>">
 										<?php echo esc_html( $n ); ?>
 									</a>
 								<?php endif; ?>
@@ -220,7 +220,7 @@ $dokumen_tampil    = array_slice( $dokumen, ( $dokumen_hal - 1 ) * $dokumen_per_
 						</span>
 
 						<?php if ( $dokumen_hal < $dokumen_total ) : ?>
-							<a class="paginasi__arah" href="<?php echo esc_url( add_query_arg( 'doc', $dokumen_hal + 1 ) ); ?>">
+							<a class="paginasi__arah" href="<?php echo esc_url( trailingslashit( get_permalink() ) . 'dokumen/' . ( $dokumen_hal + 1 ) . '/' ); ?>">
 								<?php esc_html_e( 'Selanjutnya', 'bapelkes' ); ?>
 								<img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/arrow-right-nav.svg' ) ); ?>"
 									alt="" width="24" height="24">

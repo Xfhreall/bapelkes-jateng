@@ -18,19 +18,13 @@ while ( have_posts() ) :
 
 	// Paginasi sertifikat: 12 kartu per halaman seperti desain.
 	$per_halaman = 12;
-	$halaman     = max( 1, isset( $_GET['hal'] ) ? absint( wp_unslash( $_GET['hal'] ) ) : 1 );
+	$halaman     = max( 1, absint( bapelkes_nilai_rute( 'hal', 1 ) ) );
 	$total_hal   = max( 1, (int) ceil( count( $sertifikat ) / $per_halaman ) );
 	$halaman     = min( $halaman, $total_hal );
 	$tampil      = array_slice( $sertifikat, ( $halaman - 1 ) * $per_halaman, $per_halaman );
 
-	$link_hal = static function ( $nomor ) use ( $cari_nama ) {
-		$args = array( 'hal' => $nomor );
-
-		if ( '' !== $cari_nama ) {
-			$args['nama'] = $cari_nama;
-		}
-
-		return add_query_arg( $args, get_permalink() );
+	$link_hal = static function ( $nomor ) {
+		return trailingslashit( get_permalink() ) . 'hal/' . $nomor . '/';
 	};
 
 	$rentang = $mulai ? wp_date( 'j M', strtotime( $mulai ) ) : '';

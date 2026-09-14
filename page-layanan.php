@@ -5,7 +5,7 @@
 get_header();
 
 // Bulan yang ditampilkan. Parameter tidak valid jatuh ke bulan berjalan.
-$param_bulan = isset( $_GET['bulan'] ) ? sanitize_text_field( wp_unslash( $_GET['bulan'] ) ) : '';
+$param_bulan = bapelkes_nilai_rute( 'bulan' );
 $bulan       = DateTimeImmutable::createFromFormat( '!Y-m-d', $param_bulan . '-01' );
 
 if ( ! $bulan ) {
@@ -47,18 +47,9 @@ foreach ( $sebulan_penuh as $item ) {
 }
 
 $halaman_ini = get_permalink();
-$link_bulan  = static function ( DateTimeImmutable $target ) use ( $halaman_ini, $kampus_dipilih, $cari ) {
-	$args = array( 'bulan' => $target->format( 'Y-m' ) );
-
-	if ( $kampus_dipilih ) {
-		$args['kampus'] = $kampus_dipilih;
-	}
-
-	if ( '' !== $cari ) {
-		$args['cari'] = $cari;
-	}
-
-	return add_query_arg( $args, $halaman_ini );
+// Tautan bulan memakai path agar tiap bulan punya alamat sendiri.
+$link_bulan  = static function ( DateTimeImmutable $target ) use ( $halaman_ini ) {
+	return bapelkes_url_bulan( $halaman_ini, $target );
 };
 
 $jumlah_hari  = (int) $bulan->format( 't' );
@@ -125,7 +116,7 @@ $nama_bulan   = wp_date( 'F Y', $bulan->getTimestamp() );
 				<div class="filter-pelatihan__header">
 					<p class="filter-pelatihan__judul"><?php esc_html_e( 'Filter Pelatihan', 'bapelkes' ); ?></p>
 					<a class="filter-pelatihan__reset"
-						href="<?php echo esc_url( add_query_arg( 'bulan', $bulan->format( 'Y-m' ), $halaman_ini ) ); ?>">
+						href="<?php echo esc_url( bapelkes_url_bulan( $halaman_ini, $bulan ) ); ?>">
 						<?php esc_html_e( 'Reset', 'bapelkes' ); ?>
 					</a>
 				</div>

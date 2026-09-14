@@ -6,7 +6,7 @@
  */
 get_header();
 
-$param_bulan = isset( $_GET['bulan'] ) ? sanitize_text_field( wp_unslash( $_GET['bulan'] ) ) : '';
+$param_bulan = bapelkes_nilai_rute( 'bulan' );
 $bulan       = DateTimeImmutable::createFromFormat( '!Y-m-d', $param_bulan . '-01' );
 
 if ( ! $bulan ) {
@@ -57,14 +57,8 @@ $selesai = array_values(
 );
 
 $halaman_ini = get_permalink();
-$link_bulan  = static function ( DateTimeImmutable $target ) use ( $halaman_ini, $cari ) {
-	$args = array( 'bulan' => $target->format( 'Y-m' ) );
-
-	if ( '' !== $cari ) {
-		$args['cari'] = $cari;
-	}
-
-	return add_query_arg( $args, $halaman_ini );
+$link_bulan  = static function ( DateTimeImmutable $target ) use ( $halaman_ini ) {
+	return bapelkes_url_bulan( $halaman_ini, $target );
 };
 ?>
 

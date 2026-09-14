@@ -7,6 +7,7 @@ require_once get_theme_file_path( 'inc/masukan.php' );
 require_once get_theme_file_path( 'inc/pelatihan.php' );
 require_once get_theme_file_path( 'inc/konten-halaman.php' );
 require_once get_theme_file_path( 'inc/fasilitas.php' );
+require_once get_theme_file_path( 'inc/rute.php' );
 
 function bapelkes_setup() {
 	add_theme_support( 'title-tag' );
@@ -43,6 +44,16 @@ function bapelkes_assets() {
 		filemtime( get_theme_file_path( 'assets/js/menu.js' ) ),
 		true
 	);
+
+	if ( is_page_template( 'page-layanan.php' ) || is_page( 'layanan' ) || is_page( 'unduhan' ) || is_singular( 'pelatihan' ) ) {
+		wp_enqueue_script(
+			'bapelkes-saring',
+			get_theme_file_uri( 'assets/js/saring.js' ),
+			array(),
+			filemtime( get_theme_file_path( 'assets/js/saring.js' ) ),
+			true
+		);
+	}
 
 	if ( is_singular( 'pelatihan' ) ) {
 		wp_enqueue_script(
