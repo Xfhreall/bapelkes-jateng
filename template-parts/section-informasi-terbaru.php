@@ -9,6 +9,7 @@ $berita = new WP_Query(
 		'post_type'           => 'post',
 		'posts_per_page'      => 4,
 		'ignore_sticky_posts' => true,
+		'post__not_in'        => is_singular( 'post' ) ? array( get_the_ID() ) : array(),
 		'no_found_rows'       => true,
 	)
 );
@@ -18,7 +19,7 @@ if ( ! $berita->have_posts() ) {
 }
 ?>
 
-<section class="news" data-node-id="40:1235">
+<section class="news<?php echo is_singular( 'post' ) ? ' news--compact' : ''; ?>" data-node-id="40:1235">
 	<div class="news__header">
 		<p class="news__eyebrow"><?php esc_html_e( 'Informasi Terbaru', 'bapelkes' ); ?></p>
 
