@@ -20,7 +20,7 @@ $menu   = array(
 );
 ?>
 
-<div class="mega-menu" id="mega-menu-layanan" hidden data-node-id="40:3366">
+<div class="dropdown mega-menu" id="mega-menu-layanan" data-node-id="40:3366">
 	<div class="mega-menu__header">
 		<p class="mega-menu__judul"><?php esc_html_e( 'Layanan', 'bapelkes' ); ?></p>
 		<button class="mega-menu__tutup" type="button"

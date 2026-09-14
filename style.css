@@ -56,19 +56,28 @@ a {
 
 /* ---------- Navbar ---------- */
 
-.site-header {
+.site-header-area {
 	position: absolute;
 	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 10;
+	left: 0;
+	z-index: 30;
+	width: 100%;
+}
+
+.site-header-area--solid {
+	position: relative;
+	background: var(--bapelkes-white);
+}
+
+.site-header {
 	display: flex;
 	align-items: flex-end;
 	justify-content: space-between;
 	gap: 24px;
-	width: 100%;
-	max-width: 1440px;
-	padding: 32px 56px;
+	/* Lebar isi navbar 90vw sesuai permintaan. */
+	width: 90vw;
+	margin: 0 auto;
+	padding: 32px 0;
 }
 
 .site-logo {
@@ -511,7 +520,8 @@ a {
 	flex-direction: column;
 	align-items: center;
 	gap: 72px;
-	padding: 120px 12px;
+	/* Isi section 90vw sesuai permintaan. */
+	padding: 120px 5vw;
 	background: var(--bapelkes-white);
 }
 
@@ -525,8 +535,7 @@ a {
 	align-items: flex-start;
 	justify-content: space-between;
 	gap: 40px;
-	width: 1357px;
-	max-width: 100%;
+	width: 100%;
 }
 
 .news__eyebrow {
@@ -902,9 +911,6 @@ a {
 /* ---------- Navbar varian solid (halaman selain Beranda) ---------- */
 
 .site-header--solid {
-	position: static;
-	transform: none;
-	margin: 0 auto;
 	background: var(--bapelkes-white);
 }
 
@@ -1993,6 +1999,11 @@ a {
 	background: var(--bapelkes-brand-gradient);
 }
 
+/* Ikon chevron memakai gradien merah muda; di atas tombol gradien ia hilang. */
+.bulan-nav__tombol--aktif img {
+	filter: brightness(0) invert(1);
+}
+
 .bulan-nav__tombol img {
 	display: block;
 	width: 24px;
@@ -2549,26 +2560,48 @@ a {
 
 /* ---------- Mega menu Layanan ---------- */
 
-.mega-menu[hidden] {
-	display: none;
+/* ---------- Dropdown navbar ---------- */
+
+.dropdown {
+	position: absolute;
+	top: 100%;
+	z-index: 20;
+	background: var(--bapelkes-background-primary);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-4px);
+	transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+.dropdown.is-open {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
 }
 
 .mega-menu {
-	position: relative;
-	z-index: 20;
+	left: 0;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	padding: 24px;
-	background: var(--bapelkes-background-primary);
+	width: 100%;
+	padding: 24px 5vw;
 	border-bottom: 1px solid #eaecf0;
 }
 
-.site-header:not(.site-header--solid) + .mega-menu {
-	position: absolute;
-	top: 89px;
-	left: 0;
+/* Panel ringkas menempel di bawah tautannya, rata kanan seperti desain. */
+.dropdown--ringkas {
+	right: 5vw;
+	width: 448px;
+	max-width: 90vw;
+	padding: 24px;
+	border-radius: 0 0 12px 12px;
+	box-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+}
+
+.dropdown--ringkas .mega-menu__tautan {
 	width: 100%;
+	gap: 16px;
 }
 
 .mega-menu__header {
@@ -3741,13 +3774,16 @@ a {
 	white-space: nowrap;
 }
 
+/* Figma 40:2623: foto latar 1440x598 dengan fade putih 274px,
+   kartu putih padding 24px berisi dokumen 604x397. */
 .maklumat {
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	padding: 96px 24px;
+	min-height: 598px;
+	padding: 98px 55px;
 	overflow: hidden;
 }
 
@@ -3768,24 +3804,42 @@ a {
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	height: 180px;
+	height: 274px;
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff);
 }
 
 .maklumat__kartu {
 	position: relative;
+	display: flex;
+	align-items: center;
 	margin: 0;
-	padding: 16px;
-	border-radius: 8px;
-	background: var(--bapelkes-white);
-	filter: drop-shadow(0 8px 24px rgba(16, 24, 40, 0.12));
+	padding: 24px;
+	border-radius: 12px;
+	background: var(--bapelkes-background-primary);
 }
 
 .maklumat__kartu img {
 	display: block;
-	width: 100%;
-	max-width: 560px;
-	height: auto;
+	width: 604px;
+	max-width: 100%;
+	height: 397px;
+	object-fit: contain;
+}
+
+@media (max-width: 900px) {
+	.maklumat {
+		min-height: 0;
+		padding: 48px 16px;
+	}
+
+	.maklumat__kartu {
+		padding: 16px;
+	}
+
+	.maklumat__kartu img {
+		width: 100%;
+		height: auto;
+	}
 }
 
 @media (max-width: 1200px) {
@@ -4013,15 +4067,22 @@ html {
 @media (max-width: 900px) {
 	/* Navbar melayang di atas foto sulit dibaca pada layar kecil,
 	   jadi semua halaman memakai navbar padat. */
+	.site-header-area,
+	.site-header-area--solid {
+		position: relative;
+		background: var(--bapelkes-white);
+	}
+
 	.site-header {
-		position: static;
-		transform: none;
 		flex-direction: row;
 		/* Tanpa wrap, panel menu selebar 100% ikut berdesakan di baris logo. */
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: 0 16px;
+		width: 100%;
+		max-width: none;
+		margin: 0;
 		padding: 12px 16px;
 		background: var(--bapelkes-white);
 		border-bottom: 1px solid #eaecf0;
@@ -4086,10 +4147,23 @@ html {
 		filter: brightness(0) opacity(0.62);
 	}
 
-	.mega-menu,
-	.site-header:not(.site-header--solid) + .mega-menu {
+	/* Pada layar kecil dropdown ikut alur halaman, bukan melayang. */
+	.dropdown {
 		position: static;
 		width: 100%;
+		max-width: none;
+		padding: 16px;
+		border-radius: 0;
+		box-shadow: none;
+		transform: none;
+	}
+
+	.dropdown:not(.is-open) {
+		display: none;
+	}
+
+	.dropdown--ringkas {
+		border-top: 1px solid #eaecf0;
 	}
 
 	body.menu-terbuka {

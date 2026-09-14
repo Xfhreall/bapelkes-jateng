@@ -120,19 +120,34 @@ $maklumat_latar = (int) bapelkes_konten( 'maklumat_latar' );
 		</div>
 	</div>
 
-	<?php if ( $maklumat ) : ?>
-		<section class="maklumat">
-			<?php if ( $maklumat_latar ) : ?>
-				<div class="maklumat__latar">
-					<?php echo wp_get_attachment_image( $maklumat_latar, 'full', false, array( 'alt' => '' ) ); ?>
-				</div>
-			<?php endif; ?>
+	<section class="maklumat" data-node-id="40:2623">
+		<div class="maklumat__latar">
+			<?php
+			if ( $maklumat_latar ) {
+				echo wp_get_attachment_image( $maklumat_latar, 'full', false, array( 'alt' => '' ) );
+			} else {
+				printf(
+					'<img src="%s" alt="">',
+					esc_url( get_theme_file_uri( 'assets/img/maklumat-latar.jpg' ) )
+				);
+			}
+			?>
+		</div>
 
-			<figure class="maklumat__kartu">
-				<?php echo wp_get_attachment_image( $maklumat, 'large', false, array( 'alt' => esc_attr__( 'Maklumat pelayanan', 'bapelkes' ) ) ); ?>
-			</figure>
-		</section>
-	<?php endif; ?>
+		<figure class="maklumat__kartu">
+			<?php
+			if ( $maklumat ) {
+				echo wp_get_attachment_image( $maklumat, 'large', false, array( 'alt' => esc_attr__( 'Maklumat pelayanan', 'bapelkes' ) ) );
+			} else {
+				printf(
+					'<img src="%s" alt="%s">',
+					esc_url( get_theme_file_uri( 'assets/img/maklumat-dokumen.jpg' ) ),
+					esc_attr__( 'Maklumat pelayanan', 'bapelkes' )
+				);
+			}
+			?>
+		</figure>
+	</section>
 </main>
 
 <?php get_footer(); ?>

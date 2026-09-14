@@ -10,7 +10,34 @@ $param_bulan = isset( $_GET['bulan'] ) ? sanitize_text_field( wp_unslash( $_GET[
 $bulan       = DateTimeImmutable::createFromFormat( '!Y-m-d', $param_bulan . '-01' );
 
 if ( ! $bulan ) {
-	$bulan = new DateTimeImmutable( wp_date( 'Y-m-01' ) );
+	/*
+	 * Tanpa parameter bulan, halaman ini akan membuka bulan berjalan yang
+	 * biasanya belum punya pelatihan selesai, sehingga pengunjung disambut
+	 * daftar kosong. Bulan bawaan diambil dari pelatihan selesai terbaru.
+	 */
+	$terbaru = get_posts(
+		array(
+			'post_type'      => 'pelatihan',
+			'posts_per_page' => 1,
+			'meta_key'       => '_bapelkes_selesai',
+			'orderby'        => 'meta_value',
+			'order'          => 'DESC',
+			'meta_query'     => array(
+				array(
+					'key'     => '_bapelkes_selesai',
+					'value'   => wp_date( 'Y-m-d' ),
+					'compare' => '<',
+					'type'    => 'DATE',
+				),
+			),
+		)
+	);
+
+	$bulan = $terbaru
+		? new DateTimeImmutable( get_post_meta( $terbaru[0]->ID, '_bapelkes_selesai', true ) )
+		: new DateTimeImmutable( wp_date( 'Y-m-01' ) );
+
+	$bulan = $bulan->modify( 'first day of this month' );
 }
 
 $cari     = isset( $_GET['cari'] ) ? sanitize_text_field( wp_unslash( $_GET['cari'] ) ) : '';

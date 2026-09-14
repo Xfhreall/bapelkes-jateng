@@ -13,6 +13,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<div class="site-header-area<?php echo is_front_page() ? '' : ' site-header-area--solid'; ?>">
 <header class="site-header<?php echo is_front_page() ? '' : ' site-header--solid'; ?>">
 	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 		<?php /* Dua versi logo: yang putih hanya dipakai saat navbar melayang di atas foto. */ ?>
@@ -45,3 +46,5 @@
 </header>
 
 <?php get_template_part( 'template-parts/mega', 'menu' ); ?>
+<?php get_template_part( 'template-parts/dropdown', 'pelayanan' ); ?>
+</div>
