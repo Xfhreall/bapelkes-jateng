@@ -139,7 +139,7 @@ a {
 	/* pb dari reference Figma (174px) tidak cocok dengan render aslinya; 74px menyamakan tinggi ke 759px. */
 	padding: 309px 806px 74px 42px;
 	border-radius: var(--bapelkes-radius-lg);
-	background: url("assets/img/hero.png") no-repeat center / cover;
+	background: url("assets/img/hero.jpg") no-repeat center / cover;
 	overflow: hidden;
 }
 
@@ -655,6 +655,221 @@ a {
 	}
 
 	.news-card {
+		flex: 1 1 260px;
+	}
+}
+
+/* ---------- Headline "Hadir di Tiga Kampus" ---------- */
+
+.wordmark-head {
+	display: flex;
+	flex-direction: column;
+	padding: 48px 56px;
+	background: var(--bapelkes-white);
+}
+
+.wordmark-head__line {
+	margin: 0;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 96px;
+	font-weight: 400;
+	line-height: 120px;
+	letter-spacing: -4px;
+}
+
+.wordmark-head__line--right {
+	text-align: right;
+}
+
+.wordmark-head em {
+	font-family: "Instrument Serif", Georgia, serif;
+	font-style: italic;
+	background: var(--bapelkes-brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* ---------- Tiga Kampus ---------- */
+
+.kampus {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 30px;
+	padding: 12px 12px 120px;
+	background: var(--bapelkes-white);
+}
+
+.kampus__lead {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 567px;
+	max-width: 100%;
+}
+
+.kampus__lead-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 40px;
+	letter-spacing: -2.5px;
+}
+
+.kampus__lead-address {
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.kampus__lead-title img,
+.kampus-card__title img {
+	display: block;
+	width: 32px;
+	height: 32px;
+	flex-shrink: 0;
+}
+
+.kampus__grid {
+	display: flex;
+	align-items: stretch;
+	gap: 24px;
+	width: 100%;
+}
+
+.kampus__main {
+	width: 567px;
+	height: 481px;
+	flex-shrink: 0;
+	overflow: hidden;
+}
+
+.kampus__main img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.kampus__side {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	gap: 96px;
+}
+
+.kampus-card {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.kampus-card__media {
+	position: relative;
+	display: block;
+	width: 100%;
+	overflow: hidden;
+}
+
+/* Aspect ratio dan crop image-fill diambil apa adanya dari Figma. */
+.kampus-card__media--wonosobo {
+	aspect-ratio: 316 / 277;
+}
+
+.kampus-card__media--wonosobo img {
+	position: absolute;
+	top: 0.28%;
+	left: -15.65%;
+	width: 131.49%;
+	height: 100%;
+	max-width: none;
+	object-fit: cover;
+}
+
+.kampus-card__media--ungaran {
+	aspect-ratio: 364 / 219;
+}
+
+.kampus-card__media--ungaran img {
+	position: absolute;
+	top: -3.83%;
+	left: -6.86%;
+	width: 113.86%;
+	height: 126.14%;
+	max-width: none;
+	object-fit: cover;
+}
+
+.kampus-card__text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.kampus-card__title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 40px;
+	letter-spacing: -0.5px;
+}
+
+.kampus-card__address {
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 24px;
+}
+
+/* ponytail: breakpoint tebakan — desain tidak menyediakan frame mobile. */
+@media (max-width: 1200px) {
+	.wordmark-head {
+		padding: 32px 24px;
+	}
+
+	.wordmark-head__line {
+		font-size: clamp(40px, 8vw, 96px);
+		line-height: 1.2;
+		letter-spacing: -0.05em;
+	}
+
+	.kampus {
+		padding: 12px 24px 80px;
+	}
+
+	.kampus__grid {
+		flex-direction: column;
+	}
+
+	.kampus__main {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 567 / 481;
+	}
+
+	.kampus__side {
+		gap: 32px;
+		flex-wrap: wrap;
+	}
+
+	.kampus-card {
 		flex: 1 1 260px;
 	}
 }

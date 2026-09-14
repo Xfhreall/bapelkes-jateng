@@ -19,7 +19,7 @@ add_action( 'after_setup_theme', 'bapelkes_setup' );
 function bapelkes_assets() {
 	wp_enqueue_style(
 		'bapelkes-fonts',
-		'https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Geist+Mono:wght@500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Geist+Mono:wght@500&family=Instrument+Serif:ital@1&display=swap',
 		array(),
 		null
 	);
