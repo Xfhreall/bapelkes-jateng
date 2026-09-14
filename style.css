@@ -1,0 +1,483 @@
+/*
+Theme Name: Bapelkes Jateng
+Theme URI: https://bapelkesjateng.id
+Author: Risqi Achmad Fahreal
+Description: Tema untuk situs Balai Pelatihan Kesehatan Provinsi Jawa Tengah.
+Version: 0.1.0
+Requires at least: 6.5
+Requires PHP: 8.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bapelkes
+*/
+
+:root {
+	/* Token dari Figma (variable collection) */
+	--bapelkes-white: #ffffff;
+	--bapelkes-gray-50: #f9fafb;
+	--bapelkes-gray-100: #f2f4f7;
+	--bapelkes-text-primary: #101828;
+	--bapelkes-text-secondary: #475467;
+	--bapelkes-background-primary: #ffffff;
+
+	/* Hex mentah dari desain */
+	--bapelkes-brand-pink: #f30086;
+	--bapelkes-brand-purple: #88299e;
+	--bapelkes-brand-gradient: linear-gradient(90deg, var(--bapelkes-brand-pink), var(--bapelkes-brand-purple));
+
+	--bapelkes-radius-lg: 24px;
+	--bapelkes-gutter: 12px;
+
+	--bapelkes-font-display: "Public Sans", system-ui, sans-serif;
+	/* Helvetica Neue tidak tersedia sebagai webfont berlisensi; jatuh ke stack sistem. */
+	--bapelkes-font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: var(--bapelkes-background-primary);
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-body);
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* ---------- Navbar ---------- */
+
+.site-header {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+	width: 100%;
+	max-width: 1440px;
+	padding: 32px 56px;
+}
+
+.site-logo {
+	display: block;
+	position: relative;
+	width: 110px;
+	height: 25px;
+	overflow: hidden;
+}
+
+/* Image-fill Figma memotong logo: tinggi 144.09%, offset atas -20.43%. */
+.site-logo img {
+	position: absolute;
+	top: -20.43%;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 144.09%;
+	max-width: none;
+}
+
+.nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nav-links a {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	color: var(--bapelkes-gray-50);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.nav-links .current-menu-item > a,
+.nav-links .is-active > a {
+	color: var(--bapelkes-white);
+	font-weight: 700;
+}
+
+.nav-links .menu-item-has-children > a::after {
+	content: "";
+	width: 24px;
+	height: 24px;
+	background: url("assets/icons/chevron-down.svg") no-repeat center / contain;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+	position: relative;
+	padding: var(--bapelkes-gutter);
+}
+
+.hero__inner {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-height: 759px;
+	/* pb dari reference Figma (174px) tidak cocok dengan render aslinya; 74px menyamakan tinggi ke 759px. */
+	padding: 309px 806px 74px 42px;
+	border-radius: var(--bapelkes-radius-lg);
+	background: url("assets/img/hero.png") no-repeat center / cover;
+	overflow: hidden;
+}
+
+.hero__inner::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(91deg, rgba(0, 0, 0, 0.56) 39.5%, rgba(0, 0, 0, 0) 63.4%);
+}
+
+.hero__content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 40px;
+	width: 100%;
+}
+
+.hero__text {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+}
+
+.hero__title {
+	margin: 0;
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 56px;
+	font-weight: 500;
+	line-height: 64px;
+	letter-spacing: -4px;
+}
+
+.hero__title span {
+	color: rgba(255, 255, 255, 0.64);
+}
+
+.hero__lead {
+	margin: 0;
+	max-width: 592px;
+	color: var(--bapelkes-gray-100);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.button--primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 20px;
+	border-radius: 9999px;
+	background: var(--bapelkes-brand-gradient);
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+	white-space: nowrap;
+}
+
+.button--primary img {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
+
+.hero__divider {
+	width: 100%;
+	height: 1px;
+	border: 0;
+	margin: 0;
+	background: url("assets/icons/divider.svg") repeat-x center / auto 1px;
+}
+
+.hero__badges {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 24px;
+}
+
+.hero__badge {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 14px;
+	font-weight: 500;
+	letter-spacing: -0.28px;
+}
+
+.hero__badge img {
+	display: block;
+	width: 20px;
+	height: 20px;
+}
+
+.hero__qr {
+	position: absolute;
+	right: 14px;
+	top: 618px;
+	display: flex;
+	align-items: center;
+	padding: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0.14);
+}
+
+.hero__qr-frame {
+	display: flex;
+	align-items: center;
+	padding: 8px;
+	border-radius: 4px;
+	background: var(--bapelkes-white);
+}
+
+.hero__qr-media {
+	position: relative;
+	width: 92px;
+	height: 93px;
+	overflow: hidden;
+}
+
+/* Image-fill Figma memotong QR: 166.43% x 229.8%, offset -33.21% / -82.23%. */
+.hero__qr-media img {
+	position: absolute;
+	top: -82.23%;
+	left: -33.21%;
+	display: block;
+	width: 166.43%;
+	height: 229.8%;
+	max-width: none;
+}
+
+/* ponytail: desain tidak punya frame mobile — breakpoint ini tebakan yang aman, bukan spesifikasi desainer. */
+@media (max-width: 1200px) {
+	.hero__inner {
+		padding: 220px 42px 120px;
+		min-height: 640px;
+	}
+
+	.hero__title {
+		font-size: clamp(32px, 5vw, 56px);
+		line-height: 1.14;
+		letter-spacing: -0.07em;
+	}
+
+	.hero__qr {
+		position: static;
+		align-self: flex-start;
+		margin-top: 24px;
+	}
+}
+
+@media (max-width: 900px) {
+	.site-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+		padding: 24px;
+	}
+
+	.hero__inner {
+		padding: 260px 24px 80px;
+	}
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+	position: relative;
+	height: 833px;
+	background: var(--bapelkes-white);
+	overflow: hidden;
+}
+
+.site-footer__bg {
+	position: absolute;
+	top: 68px;
+	left: 0;
+	width: 100%;
+	height: 765px;
+	background: url("assets/img/footer-bg.png") no-repeat center / cover;
+}
+
+.site-footer__bg::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(255, 255, 255, 0.24);
+}
+
+.site-footer__wordmark {
+	position: absolute;
+	top: 450px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 0;
+	opacity: 0.48;
+	font-family: var(--bapelkes-font-display);
+	font-size: 400px;
+	font-weight: 500;
+	line-height: 400px;
+	letter-spacing: -24px;
+	white-space: nowrap;
+	background: linear-gradient(180deg, var(--bapelkes-white) 41.125%, rgba(234, 236, 240, 0.48) 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.site-footer__inner {
+	position: absolute;
+	top: 111px;
+	left: 0;
+	display: flex;
+	gap: 264px;
+	align-items: flex-start;
+	width: 100%;
+	padding: 0 42px;
+}
+
+.site-footer__logo {
+	display: block;
+	width: 113px;
+	height: 25px;
+	flex-shrink: 0;
+	overflow: hidden;
+}
+
+.site-footer__logo img {
+	display: block;
+	width: 99.94%;
+	height: 100%;
+	margin-left: 0.47%;
+	max-width: none;
+}
+
+.site-footer__nav {
+	flex: 0 1 979px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 979px;
+	padding: 0 42px;
+}
+
+.footer-column {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+/* Lebar kolom dari desain — menentukan titik wrap teks link. */
+.site-footer__nav .footer-column:nth-child(1) {
+	width: 184px;
+}
+
+.site-footer__nav .footer-column:nth-child(2) {
+	width: 185px;
+}
+
+.site-footer__nav .footer-column:nth-child(3) {
+	width: 150px;
+}
+
+.footer-column__title {
+	margin: 0;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-body);
+	font-size: 20px;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.footer-column__links {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.footer-column__links a {
+	color: var(--bapelkes-text-secondary);
+	font-family: "Open Sans", var(--bapelkes-font-body);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.footer-column__links a:hover {
+	color: var(--bapelkes-text-primary);
+}
+
+/* ponytail: breakpoint tebakan — desain tidak menyediakan frame mobile untuk footer. */
+@media (max-width: 1200px) {
+	.site-footer {
+		height: auto;
+		padding-bottom: 64px;
+	}
+
+	.site-footer__inner {
+		position: static;
+		flex-direction: column;
+		gap: 40px;
+		padding: 111px 24px 0;
+	}
+
+	.site-footer__nav {
+		width: 100%;
+		flex-wrap: wrap;
+		gap: 40px;
+		padding: 0;
+	}
+
+	.site-footer__bg {
+		height: 100%;
+	}
+
+	.site-footer__wordmark {
+		top: auto;
+		bottom: -40px;
+		font-size: clamp(120px, 28vw, 400px);
+		line-height: 1;
+		letter-spacing: -0.06em;
+	}
+}
