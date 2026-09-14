@@ -41,6 +41,10 @@ function bapelkes_field_halaman() {
 			'struktur_gambar'  => array( 'gambar', 'Bagan struktur organisasi' ),
 		),
 
+		'page-standar-pelayanan.php' => array(
+			'sp_label' => array( 'teks', 'Label kolom kiri' ),
+		),
+
 		'page-pelayanan-publik.php' => array(
 			'pp_judul'            => array( 'teks', 'Judul (kata miring bergradien)' ),
 			'pp_judul_sisa'       => array( 'teks', 'Sisa judul' ),
