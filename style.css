@@ -2733,3 +2733,551 @@ a {
 		flex: 0 0 140px;
 	}
 }
+
+/* ---------- Profil ---------- */
+
+.profil {
+	background: var(--bapelkes-white);
+}
+
+.profil__visi {
+	padding: 72px 56px;
+}
+
+.profil__visi-teks {
+	margin: 0;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 48px;
+	font-weight: 400;
+	line-height: 56px;
+	letter-spacing: -2.5px;
+	text-align: center;
+}
+
+.profil__visi-teks em {
+	font-family: "Instrument Serif", Georgia, serif;
+	font-style: italic;
+	background: var(--bapelkes-brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.profil__misi {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	min-height: 598px;
+	padding: 98px 55px;
+	overflow: hidden;
+}
+
+.profil__misi-latar {
+	position: absolute;
+	inset: 0;
+}
+
+.profil__misi-latar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Fade putih ke bawah seperti Hero Photo Fade di desain. */
+.profil__misi-latar::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 274px;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff);
+}
+
+.profil__misi-kartu {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	width: 1329px;
+	max-width: 100%;
+	height: 336px;
+	padding: 8px;
+	border-radius: 12px;
+	background: var(--bapelkes-background-primary);
+}
+
+.misi-card {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 100%;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 24px;
+	border: 1px solid var(--bapelkes-gray-100);
+	border-radius: 12px;
+	background: #fcfcfc;
+}
+
+.misi-card__label {
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: var(--bapelkes-gray-100);
+	font-family: "Geist Mono", ui-monospace, monospace;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	background-clip: padding-box;
+}
+
+.misi-card__label {
+	color: var(--bapelkes-brand-pink);
+}
+
+.misi-card__teks {
+	margin: 0;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+}
+
+.profil__program {
+	display: flex;
+	flex-direction: column;
+	gap: 48px;
+	padding: 48px 56px;
+}
+
+.profil__program-judul {
+	margin: 0;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 32px;
+	letter-spacing: -1.5px;
+}
+
+.profil__program-kolom {
+	display: flex;
+	align-items: flex-start;
+	gap: 40px;
+}
+
+.program-list {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.program-list li {
+	padding: 24px 0;
+	border-bottom: 1px solid #eaecf0;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+}
+
+.profil__pimpinan {
+	display: flex;
+	align-items: flex-end;
+	gap: 12px;
+	padding: 56px;
+}
+
+.pimpinan-intro {
+	position: relative;
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 401px;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 40px 24px;
+	border-radius: 12px;
+	background: var(--bapelkes-brand-gradient);
+	overflow: hidden;
+}
+
+.pimpinan-intro__latar {
+	position: absolute;
+	inset: 0;
+}
+
+.pimpinan-intro__latar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.pimpinan-intro__latar::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.pimpinan-intro__judul,
+.pimpinan-intro__ket {
+	position: relative;
+	margin: 0;
+}
+
+.pimpinan-intro__judul {
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 32px;
+	letter-spacing: -1.5px;
+}
+
+.pimpinan-intro__judul em {
+	font-family: "Instrument Serif", Georgia, serif;
+	font-size: 32px;
+	font-style: italic;
+	color: var(--bapelkes-white);
+}
+
+.pimpinan-intro__judul span {
+	color: rgba(255, 255, 255, 0.72);
+}
+
+.pimpinan-intro__ket {
+	color: var(--bapelkes-gray-100);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
+}
+
+.pimpinan-card {
+	position: relative;
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 404px;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 8px;
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.pimpinan-card__foto {
+	position: absolute;
+	inset: 0;
+}
+
+.pimpinan-card__foto img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.pimpinan-card__teks {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 12px 8px;
+	border-radius: 12px;
+	background: var(--bapelkes-background-primary);
+}
+
+.pimpinan-card__nama {
+	margin: 0;
+	overflow: hidden;
+	color: var(--bapelkes-text-primary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 18px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+	text-overflow: ellipsis;
+}
+
+.pimpinan-card__jabatan {
+	margin: 0;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
+}
+
+.profil__sejarah {
+	padding: 8px;
+}
+
+.sejarah {
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
+	padding: 44px 20px;
+	border-radius: var(--bapelkes-radius-lg);
+	background: #000;
+}
+
+.sejarah__judul {
+	width: 477px;
+	max-width: 100%;
+	margin: 0;
+	padding: 0 24px;
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 48px;
+	font-weight: 400;
+	line-height: 56px;
+	letter-spacing: -2.5px;
+}
+
+.sejarah__baris-grup {
+	display: flex;
+	flex-direction: column;
+}
+
+.sejarah__baris {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 48px 24px;
+	border-radius: 12px;
+}
+
+.sejarah__baris:nth-child(even) {
+	background: #121212;
+}
+
+.sejarah__tahun {
+	color: var(--bapelkes-white);
+	font-family: "Geist Mono", ui-monospace, monospace;
+	font-size: 40px;
+	line-height: 40px;
+	letter-spacing: -0.5px;
+	white-space: nowrap;
+}
+
+.sejarah__nama {
+	width: 432px;
+	flex-shrink: 1;
+	color: var(--bapelkes-white);
+	font-family: var(--bapelkes-font-display);
+	font-size: 24px;
+	line-height: 40px;
+	letter-spacing: -0.5px;
+}
+
+.sejarah__ket {
+	width: 530px;
+	flex-shrink: 1;
+	color: #eaecf0;
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
+}
+
+.profil__tupoksi {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding: 96px 56px;
+	background: linear-gradient(180deg, #fff 0%, #fde6f4 40%, #f4e2fb 100%);
+}
+
+.profil__tupoksi-judul {
+	margin: 0;
+	font-family: "Instrument Serif", Georgia, serif;
+	font-size: 48px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 56px;
+}
+
+.profil__tupoksi-judul em {
+	font-style: italic;
+	background: var(--bapelkes-brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.profil__tupoksi-sub {
+	margin: 0;
+	color: var(--bapelkes-text-secondary);
+	font-family: var(--bapelkes-font-display);
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.profil__dokumen {
+	display: flex;
+	gap: 24px;
+	margin-top: 24px;
+}
+
+.profil__dokumen-halaman {
+	margin: 0;
+	padding: 12px;
+	border-radius: 12px;
+	background: var(--bapelkes-white);
+	filter: drop-shadow(0 4px 10px rgba(16, 24, 40, 0.08));
+}
+
+.profil__dokumen-halaman img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-width: 420px;
+}
+
+.profil__struktur {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 48px;
+	padding: 72px 12px 120px;
+}
+
+.profil__struktur-judul {
+	width: 1416px;
+	max-width: 100%;
+	margin: 0;
+	color: #000;
+	font-family: var(--bapelkes-font-display);
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 40px;
+	letter-spacing: -1.5px;
+	text-align: center;
+}
+
+.profil__struktur-bagan {
+	margin: 0;
+	max-width: 100%;
+}
+
+.profil__struktur-bagan img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+@media (max-width: 1200px) {
+	.profil__visi,
+	.profil__program,
+	.profil__pimpinan,
+	.profil__tupoksi {
+		padding: 48px 24px;
+	}
+
+	.profil__visi-teks,
+	.sejarah__judul,
+	.profil__tupoksi-judul {
+		font-size: clamp(28px, 5vw, 48px);
+		line-height: 1.16;
+	}
+
+	.profil__misi {
+		padding: 48px 24px;
+	}
+
+	.profil__misi-kartu {
+		height: auto;
+		flex-wrap: wrap;
+	}
+
+	.misi-card {
+		flex: 1 1 240px;
+		height: auto;
+		gap: 16px;
+	}
+
+	.profil__program-kolom {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.profil__pimpinan {
+		flex-wrap: wrap;
+	}
+
+	.pimpinan-intro,
+	.pimpinan-card {
+		flex: 1 1 260px;
+		height: 340px;
+	}
+
+	.sejarah__baris {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+		padding: 32px 16px;
+	}
+
+	.sejarah__nama,
+	.sejarah__ket {
+		width: 100%;
+	}
+
+	.profil__dokumen {
+		flex-direction: column;
+	}
+
+	.profil__struktur {
+		padding: 48px 24px 80px;
+	}
+
+	.profil__struktur-judul {
+		font-size: clamp(20px, 4vw, 32px);
+		line-height: 1.25;
+	}
+}
+
+.profil__dokumen-wadah {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 924px;
+	max-width: 100%;
+	/* Jarak header ke dokumen pada desain 46px; 16px sudah datang dari gap section. */
+	margin-top: 30px;
+}
+
+.profil__dokumen {
+	display: flex;
+	gap: 8px;
+	padding: 9px;
+	border-radius: 12px;
+	background: var(--bapelkes-white);
+	filter: drop-shadow(0 4px 10px rgba(16, 24, 40, 0.08));
+}
+
+.profil__dokumen-halaman {
+	flex: 1 1 0;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.profil__dokumen-halaman img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
