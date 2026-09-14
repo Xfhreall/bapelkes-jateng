@@ -4149,8 +4149,11 @@ html {
 @media (max-width: 900px) {
 	/* Navbar melayang di atas foto sulit dibaca pada layar kecil,
 	   jadi semua halaman memakai navbar padat. */
+	/* Spesifisitas harus menyamai aturan desktop :not(), kalau tidak margin
+	   negatif -89px tetap berlaku dan navbar putih menutupi puncak hero. */
 	.site-header-area,
-	.site-header-area--solid {
+	.site-header-area--solid,
+	.site-header-area:not(.site-header-area--solid) {
 		position: sticky;
 		top: 0;
 		margin-bottom: 0;
