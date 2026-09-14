@@ -80,6 +80,28 @@ a {
 }
 
 /* Image-fill Figma memotong logo: tinggi 144.09%, offset atas -20.43%. */
+.site-logo img.site-logo__gelap {
+	display: none;
+}
+
+/* Logo berwarna punya proporsi sendiri, jadi tidak ikut crop logo putih. */
+.site-logo img.site-logo__gelap {
+	top: 0;
+	left: 0.47%;
+	width: 99.94%;
+	height: 100%;
+	object-fit: contain;
+	object-position: left center;
+}
+
+.site-header--solid .site-logo img.site-logo__terang {
+	display: none;
+}
+
+.site-header--solid .site-logo img.site-logo__gelap {
+	display: block;
+}
+
 .site-logo img {
 	position: absolute;
 	top: -20.43%;
@@ -3885,5 +3907,452 @@ a {
 
 	.standar__isi h2 {
 		font-size: clamp(22px, 4vw, 28px);
+	}
+}
+
+/* =========================================================
+   Lapisan responsive
+   Desain tidak menyediakan frame mobile, jadi titik henti dan
+   perilaku di bawah ini mengikuti praktik umum, bukan spesifikasi
+   desainer: 1200px tablet lanskap, 900px tablet potret, 600px ponsel.
+   ========================================================= */
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+/* Target sentuh minimal 44px pada perangkat tanpa penunjuk presisi. */
+@media (pointer: coarse) {
+	.nav-links a,
+	.filters a,
+	.footer-column__links a,
+	.paginasi__hal,
+	.paginasi__arah,
+	.filter-pelatihan__reset,
+	.news__more,
+	.sertifikat-card__unduh,
+	.mega-menu__item {
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+	}
+
+	.bulan-nav__tombol {
+		padding: 10px;
+	}
+
+	.filter-pelatihan__baris {
+		min-height: 44px;
+	}
+}
+
+/* ---------- Tombol menu ---------- */
+
+.nav-toggle {
+	display: none;
+	position: relative;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: none;
+	cursor: pointer;
+}
+
+.nav-toggle__garis,
+.nav-toggle__garis::before,
+.nav-toggle__garis::after {
+	position: absolute;
+	left: 10px;
+	width: 24px;
+	height: 2px;
+	background: currentColor;
+	transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-toggle__garis {
+	top: 21px;
+}
+
+.nav-toggle__garis::before,
+.nav-toggle__garis::after {
+	content: "";
+	left: 0;
+}
+
+.nav-toggle__garis::before {
+	top: -7px;
+}
+
+.nav-toggle__garis::after {
+	top: 7px;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__garis {
+	background: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__garis::before {
+	transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__garis::after {
+	transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- 900px ke bawah: navbar jadi menu lipat ---------- */
+
+@media (max-width: 900px) {
+	/* Navbar melayang di atas foto sulit dibaca pada layar kecil,
+	   jadi semua halaman memakai navbar padat. */
+	.site-header {
+		position: static;
+		transform: none;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 12px 16px;
+		background: var(--bapelkes-white);
+		border-bottom: 1px solid #eaecf0;
+	}
+
+	.nav-toggle {
+		display: block;
+		color: var(--bapelkes-text-primary);
+	}
+
+	.site-logo img.site-logo__terang {
+		display: none;
+	}
+
+	.site-logo img.site-logo__gelap {
+		display: block;
+	}
+
+	.site-nav {
+		display: none;
+		width: 100%;
+		order: 3;
+	}
+
+	.site-nav.is-open {
+		display: block;
+	}
+
+	.nav-links {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		padding: 8px 0 4px;
+	}
+
+	.nav-links li + li {
+		border-top: 1px solid #f2f4f7;
+	}
+
+	.nav-links a,
+	.site-header--solid .nav-links a {
+		justify-content: space-between;
+		/* 14px atas-bawah menjaga tinggi sentuh tetap 44px walau tanpa media pointer. */
+		padding: 14px 0;
+		min-height: 44px;
+		color: var(--bapelkes-text-primary);
+		font-size: 16px;
+	}
+
+	.mega-menu,
+	.site-header:not(.site-header--solid) + .mega-menu {
+		position: static;
+		width: 100%;
+	}
+
+	body.menu-terbuka {
+		overflow: hidden;
+	}
+
+	/* Hero tidak lagi tertutup navbar melayang. */
+	.hero__inner {
+		padding: 64px 24px;
+		min-height: 0;
+	}
+
+	.hero__qr {
+		margin-top: 16px;
+	}
+
+	.hero__title {
+		font-size: clamp(28px, 7vw, 40px);
+		line-height: 1.15;
+		letter-spacing: -0.04em;
+	}
+
+	.hero__lead {
+		font-size: 16px;
+	}
+}
+
+/* ---------- 600px ke bawah: ponsel ---------- */
+
+@media (max-width: 600px) {
+	.hero {
+		padding: 8px;
+	}
+
+	.hero__content {
+		gap: 24px;
+	}
+
+	.hero__badges {
+		gap: 12px 16px;
+	}
+
+	/* Teks pendukung dinaikkan agar tetap terbaca di layar kecil. */
+	.news-card__excerpt,
+	.materi-card__ket,
+	.mega-menu__ket {
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	.news-card__title,
+	.fasilitas-item figcaption,
+	.sertifikat-card__nama {
+		font-size: 16px;
+	}
+
+	.post-grid {
+		grid-template-columns: 1fr;
+		row-gap: 32px;
+	}
+
+	.news-card__media {
+		height: 220px;
+	}
+
+	.publikasi,
+	.layanan,
+	.news,
+	.galeri__grid,
+	.detail-fasilitas,
+	.unduhan,
+	.standar {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.publikasi__toolbar,
+	.layanan__toolbar {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.bulan-nav {
+		justify-content: space-between;
+	}
+
+	.sertifikat {
+		grid-template-columns: 1fr;
+	}
+
+	.paginasi {
+		flex-wrap: wrap;
+		gap: 8px;
+		justify-content: center;
+	}
+
+	.paginasi__nomor {
+		order: -1;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	/* Tabel jadwal sudah menumpuk; rapatkan agar tidak terlalu tinggi. */
+	.jadwal {
+		padding: 0 16px;
+	}
+
+	.jadwal__baris {
+		padding: 14px 0;
+	}
+
+	.jadwal__judul {
+		font-size: 16px;
+	}
+
+	/* Grafik IKM: nama unsur pindah ke atas batang. */
+	.grafik__skala {
+		display: none;
+	}
+
+	.grafik__tabel,
+	.grafik__tabel tbody,
+	.grafik__tabel tr,
+	.grafik__tabel th,
+	.grafik__tabel td {
+		display: block;
+		width: auto;
+	}
+
+	.grafik__tabel tr {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 4px 12px;
+		padding: 10px 0;
+		border-bottom: 1px solid #f2f4f7;
+	}
+
+	.grafik__tabel th {
+		grid-column: 1 / -1;
+		padding: 0;
+		font-size: 14px;
+	}
+
+	.grafik__nilai {
+		width: auto;
+		padding: 0;
+		font-size: 14px;
+	}
+
+	.responden__rincian {
+		gap: 24px;
+	}
+
+	.galeri__item {
+		height: 180px;
+	}
+
+	.footer-column__links a,
+	.filters a {
+		font-size: 15px;
+	}
+
+	.site-footer__wordmark {
+		font-size: clamp(72px, 24vw, 160px);
+	}
+
+	.misi-card,
+	.fasilitas-card,
+	.kampus-card {
+		flex: 1 1 100%;
+	}
+
+	.masukan-form {
+		padding: 16px;
+	}
+
+	.suara__panel {
+		padding: 16px;
+	}
+}
+
+/* Aksesibilitas papan ketik: fokus harus terlihat di semua tema. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+	outline: 2px solid var(--bapelkes-brand-purple);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (max-width: 600px) {
+	/* Kalender: sel tetap 40px meluber di layar 360px, jadi dibuat mengikuti lebar. */
+	.kalender__grid {
+		grid-template-columns: repeat(7, 1fr);
+	}
+
+	.kalender__day,
+	.kalender__weekday {
+		width: auto;
+	}
+
+	.kalender__day-number {
+		width: 100%;
+		max-width: 36px;
+		margin: 0 auto;
+	}
+
+	.layanan__sidebar {
+		padding: 12px;
+	}
+
+	.kalender,
+	.filter-pelatihan {
+		padding: 16px;
+	}
+}
+
+/* Ukuran sentuh berdasarkan lebar layar, bukan hanya jenis penunjuk.
+   Media pointer:coarse tidak berlaku di peramban desktop, sehingga
+   aturan ini yang menjamin ukurannya pada layar kecil. */
+@media (max-width: 900px) {
+	.site-logo,
+	.site-footer__logo {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
+		height: auto;
+	}
+
+	.site-logo img,
+	.site-footer__logo img {
+		position: relative;
+		top: auto;
+	}
+
+	.site-logo img.site-logo__gelap {
+		height: 25px;
+	}
+
+	.filters a,
+	.footer-column__links a,
+	.paginasi__hal,
+	.paginasi__arah,
+	.filter-pelatihan__reset,
+	.news__more,
+	.sertifikat-card__unduh,
+	.mega-menu__item,
+	.jadwal__aksi {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+	}
+
+	.bulan-nav__tombol,
+	.kalender__nav a {
+		min-width: 44px;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.mega-menu__tutup,
+	.popup__tutup {
+		width: 44px;
+		height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.filter-pelatihan__baris {
+		min-height: 44px;
+	}
+
+	.filter-pelatihan__check input {
+		width: 24px;
+		height: 24px;
 	}
 }

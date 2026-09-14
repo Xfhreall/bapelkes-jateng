@@ -4,6 +4,26 @@
  * ini hanya berperilaku sebagai tautan biasa.
  */
 ( function () {
+	/* Menu utama pada layar kecil. */
+	var tombol = document.querySelector( '.nav-toggle' );
+	var nav = document.getElementById( 'menu-utama' );
+
+	if ( tombol && nav ) {
+		tombol.addEventListener( 'click', function () {
+			var terbuka = nav.classList.toggle( 'is-open' );
+			tombol.setAttribute( 'aria-expanded', terbuka ? 'true' : 'false' );
+			document.body.classList.toggle( 'menu-terbuka', terbuka );
+		} );
+
+		document.addEventListener( 'keydown', function ( event ) {
+			if ( 'Escape' === event.key && nav.classList.contains( 'is-open' ) ) {
+				nav.classList.remove( 'is-open' );
+				tombol.setAttribute( 'aria-expanded', 'false' );
+				document.body.classList.remove( 'menu-terbuka' );
+			}
+		} );
+	}
+
 	var menu = document.getElementById( 'mega-menu-layanan' );
 
 	if ( ! menu ) {

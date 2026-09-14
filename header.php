@@ -15,11 +15,21 @@
 
 <header class="site-header<?php echo is_front_page() ? '' : ' site-header--solid'; ?>">
 	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-		<img src="<?php echo esc_url( get_theme_file_uri( is_front_page() ? 'assets/img/logo.png' : 'assets/img/logo-color.png' ) ); ?>"
+		<?php /* Dua versi logo: yang putih hanya dipakai saat navbar melayang di atas foto. */ ?>
+		<img class="site-logo__terang"
+			src="<?php echo esc_url( get_theme_file_uri( 'assets/img/logo.png' ) ); ?>"
 			alt="<?php bloginfo( 'name' ); ?>" width="110" height="25">
+		<img class="site-logo__gelap"
+			src="<?php echo esc_url( get_theme_file_uri( 'assets/img/logo-color.png' ) ); ?>"
+			alt="" aria-hidden="true" width="110" height="25">
 	</a>
 
-	<nav class="site-nav" aria-label="<?php esc_attr_e( 'Menu Utama', 'bapelkes' ); ?>">
+	<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-utama">
+		<span class="nav-toggle__garis" aria-hidden="true"></span>
+		<span class="screen-reader-text"><?php esc_attr_e( 'Buka menu', 'bapelkes' ); ?></span>
+	</button>
+
+	<nav class="site-nav" id="menu-utama" aria-label="<?php esc_attr_e( 'Menu Utama', 'bapelkes' ); ?>">
 		<?php
 		wp_nav_menu(
 			array(
