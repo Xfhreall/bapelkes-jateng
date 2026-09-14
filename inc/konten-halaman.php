@@ -40,6 +40,23 @@ function bapelkes_field_halaman() {
 			'struktur_judul'   => array( 'area', 'Judul struktur organisasi' ),
 			'struktur_gambar'  => array( 'gambar', 'Bagan struktur organisasi' ),
 		),
+
+		'page-pelayanan-publik.php' => array(
+			'pp_judul'            => array( 'teks', 'Judul (kata miring bergradien)' ),
+			'pp_judul_sisa'       => array( 'teks', 'Sisa judul' ),
+			'pp_lead'             => array( 'area', 'Kalimat pengantar' ),
+			'ikm_label'           => array( 'teks', 'Label indeks' ),
+			'ikm_nilai'           => array( 'teks', 'Nilai IKM' ),
+			'ikm_mutu'            => array( 'teks', 'Mutu pelayanan' ),
+			'ikm_ket'             => array( 'area', 'Keterangan di bawah nilai' ),
+			'ikm_grafik_judul'    => array( 'teks', 'Judul grafik' ),
+			'ikm_unsur'           => array( 'tabel', 'Unsur penilaian: Nama | Nilai' ),
+			'responden_total'     => array( 'teks', 'Jumlah responden' ),
+			'responden_perempuan' => array( 'teks', 'Responden perempuan' ),
+			'responden_laki'      => array( 'teks', 'Responden laki-laki' ),
+			'maklumat_gambar'     => array( 'gambar', 'Gambar maklumat pelayanan' ),
+			'maklumat_latar'      => array( 'gambar', 'Foto latar maklumat' ),
+		),
 	);
 }
 
