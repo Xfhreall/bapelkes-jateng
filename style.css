@@ -85,17 +85,23 @@ a {
 	background: var(--bapelkes-white);
 }
 
-/* Begitu digulir, latar jadi putih agar tautan tetap terbaca. */
-.site-header-area.is-scrolled {
+/* Begitu digulir, latar jadi putih agar tautan tetap terbaca.
+   Aturan yang sama berlaku selama dropdown terbuka: panelnya putih dan
+   menempel di bawah navbar, jadi navbar transparan membuat keduanya
+   terlihat seperti dua benda terpisah. */
+.site-header-area.is-scrolled,
+.site-header-area.is-menu-open {
 	background: var(--bapelkes-white);
 	box-shadow: 0 1px 0 #eaecf0, 0 8px 24px rgba(16, 24, 40, 0.06);
 }
 
-.site-header-area.is-scrolled .site-logo img.site-logo__terang {
+.site-header-area.is-scrolled .site-logo img.site-logo__terang,
+.site-header-area.is-menu-open .site-logo img.site-logo__terang {
 	display: none;
 }
 
-.site-header-area.is-scrolled .site-logo img.site-logo__gelap {
+.site-header-area.is-scrolled .site-logo img.site-logo__gelap,
+.site-header-area.is-menu-open .site-logo img.site-logo__gelap {
 	display: block;
 	top: 0;
 	left: 0.47%;
@@ -105,11 +111,13 @@ a {
 	object-position: left center;
 }
 
-.site-header-area.is-scrolled .nav-links a {
+.site-header-area.is-scrolled .nav-links a,
+.site-header-area.is-menu-open .nav-links a {
 	color: var(--bapelkes-text-primary);
 }
 
-.site-header-area.is-scrolled .nav-links .menu-item-has-children > a::after {
+.site-header-area.is-scrolled .nav-links .menu-item-has-children > a::after,
+.site-header-area.is-menu-open .nav-links .menu-item-has-children > a::after {
 	filter: brightness(0) opacity(0.62);
 }
 
@@ -229,6 +237,8 @@ a {
 
 .site-header-area.is-scrolled .nav-links .current-menu-item > a,
 .site-header-area.is-scrolled .nav-links .is-active > a,
+.site-header-area.is-menu-open .nav-links .current-menu-item > a,
+.site-header-area.is-menu-open .nav-links .is-active > a,
 .site-header--solid .nav-links .current-menu-item > a,
 .site-header--solid .nav-links .is-active > a {
 	color: var(--bapelkes-text-primary);
@@ -2676,9 +2686,23 @@ a {
 	right: 5vw;
 	width: 448px;
 	max-width: 90vw;
-	padding: 24px;
+	padding: 8px 24px 24px;
 	border-radius: 0 0 12px 12px;
-	box-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+	/* Spread negatif menahan bayangan agar tidak naik ke atas panel dan
+	   membentuk garis abu di perbatasannya dengan navbar. */
+	box-shadow: 0 12px 24px -8px rgba(16, 24, 40, 0.18);
+}
+
+/* Menutup celah setipis piksel antara navbar dan panel akibat pembulatan
+   posisi sticky, supaya keduanya terbaca sebagai satu bidang putih. */
+.dropdown--ringkas::before {
+	content: "";
+	position: absolute;
+	top: -1px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background: var(--bapelkes-background-primary);
 }
 
 .dropdown--ringkas .mega-menu__tautan {

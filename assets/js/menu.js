@@ -82,6 +82,8 @@
 				a.setAttribute( 'aria-expanded', 'false' );
 			} );
 		} );
+
+		area.classList.remove( 'is-menu-open' );
 	}
 
 	function buka( p ) {
@@ -95,6 +97,13 @@
 		pemicuUntuk( p ).forEach( function ( a ) {
 			a.setAttribute( 'aria-expanded', 'true' );
 		} );
+
+		/*
+		 * Panel dropdown berlatar putih dan menempel persis di bawah navbar.
+		 * Saat navbar masih transparan di atas hero, keduanya terlihat
+		 * seperti dua benda terpisah, jadi navbar ikut memutih.
+		 */
+		area.classList.add( 'is-menu-open' );
 	}
 
 	/* Jeda singkat supaya kursor sempat berpindah dari tautan ke panel. */

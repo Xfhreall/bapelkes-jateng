@@ -103,18 +103,62 @@ function bapelkes_default_menu() {
 			$classes[] = 'menu-item-has-children';
 		}
 
-		if ( 'Beranda' === $label && is_front_page() ) {
+		$aktif = bapelkes_menu_aktif( $label );
+
+		if ( $aktif ) {
 			$classes[] = 'is-active';
 		}
 
 		printf(
-			'<li class="%1$s"><a href="%2$s">%3$s</a></li>',
+			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a></li>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_url( $url ),
+			$aktif ? ' aria-current="page"' : '',
 			esc_html( $label )
 		);
 	}
 	echo '</ul>';
+}
+
+/**
+ * Menentukan item menu mana yang sedang aktif.
+ *
+ * Bukan sekadar mencocokkan alamat: satu item mewakili beberapa halaman.
+ * Publikasi tetap menyala saat membaca satu berita atau arsip kategori,
+ * dan Layanan tetap menyala di halaman satu pelatihan maupun fasilitas
+ * kampus, karena keduanya cabang dari menu itu.
+ */
+function bapelkes_menu_aktif( $label ) {
+	switch ( $label ) {
+		case 'Beranda':
+			return is_front_page();
+
+		case 'Profil':
+			return is_page( 'profil' );
+
+		case 'Publikasi':
+			return is_home() || is_singular( 'post' ) || is_category() || is_search();
+
+		case 'Layanan':
+			return is_page( 'layanan' )
+				|| is_singular( 'pelatihan' )
+				|| is_page( 'fasilitas' )
+				|| is_tax( 'kampus' );
+
+		case 'Galeri':
+			return is_page( 'galeri' );
+
+		case 'Unduhan':
+			return is_page( 'unduhan' );
+
+		case 'Suara Pembaca':
+			return is_page( 'suara-pembaca' );
+
+		case 'Pelayanan Publik':
+			return is_page( 'pelayanan-publik' ) || is_page( 'standar-pelayanan' );
+	}
+
+	return false;
 }
 
 /**
