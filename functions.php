@@ -34,6 +34,14 @@ function bapelkes_assets() {
 		filemtime( get_stylesheet_directory() . '/style.css' )
 	);
 
+	wp_enqueue_script(
+		'bapelkes-menu',
+		get_theme_file_uri( 'assets/js/menu.js' ),
+		array(),
+		filemtime( get_theme_file_path( 'assets/js/menu.js' ) ),
+		true
+	);
+
 	if ( is_singular( 'pelatihan' ) ) {
 		wp_enqueue_script(
 			'bapelkes-unduhan',
