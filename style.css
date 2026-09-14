@@ -39,6 +39,15 @@ Text Domain: bapelkes
 	box-sizing: border-box;
 }
 
+/*
+ * Atribut hidden harus selalu menang. Tanpa ini, tiap aturan display di
+ * bawahnya membatalkan penyembunyian: baris jadwal yang sudah diberi
+ * hidden oleh penyaring tetap tampil karena .jadwal__baris display:flex.
+ */
+[hidden] {
+	display: none !important;
+}
+
 body {
 	margin: 0;
 	background: var(--bapelkes-background-primary);
@@ -2436,11 +2445,6 @@ a {
 }
 
 /* ---------- Pop up unduhan ---------- */
-
-/* Atribut hidden harus menang atas display:flex di bawah ini. */
-.popup[hidden] {
-	display: none;
-}
 
 .popup {
 	position: fixed;
