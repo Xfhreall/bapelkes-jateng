@@ -1,12 +1,18 @@
 /**
- * Penyaringan di sisi klien untuk pencarian dan filter kampus.
+ * Penyaringan berbasis parameter URL.
  *
- * Versi server tetap ada dan tetap jadi acuan: tanpa JavaScript, form
- * dikirim seperti biasa dan WordPress yang menyaring. Skrip ini hanya
- * menahan pengiriman lalu menyaring baris yang sudah tampil, sehingga
- * halaman juga berfungsi ketika disajikan sebagai berkas statis.
+ * Status penyaring disimpan di URL, bukan di dalam halaman. Alamat hasil
+ * penyaringan bisa disalin, di-bookmark, dan dibuka ulang dengan hasil yang
+ * sama. Penyaring hanya berlaku setelah form dikirim, sesuai tombol Terapkan
+ * di desain; mengetik atau mencentang saja tidak mengubah apa pun.
+ *
+ * Di hosting PHP, WordPress yang menyaring dari parameter yang sama. Di
+ * salinan statis parameter diabaikan server, lalu skrip ini menyaring baris
+ * yang sudah tampil. Hasil akhirnya sama di kedua tempat.
  */
 ( function () {
+	var params = new URLSearchParams( window.location.search );
+
 	function normal( teks ) {
 		return ( teks || '' ).toLowerCase().trim();
 	}
@@ -30,7 +36,7 @@
 		pesan.textContent = teks;
 	}
 
-	/* ---------- Daftar pelatihan: pencarian + filter kampus ---------- */
+	/* ---------- Daftar pelatihan ---------- */
 
 	var jadwal = document.querySelector( '.jadwal' );
 
@@ -41,51 +47,83 @@
 			document.querySelectorAll( '.filter-pelatihan__check input[type="checkbox"]' )
 		);
 
-		var saring = function () {
-			var kata = kotakCari ? normal( kotakCari.value ) : '';
-			var kampus = centang.filter( function ( c ) {
-				return c.checked;
-			} ).map( function ( c ) {
-				return c.value;
-			} );
+		var kataURL = params.get( 'cari' ) || '';
+		var kampusURL = params.getAll( 'kampus[]' ).concat( params.getAll( 'kampus' ) );
 
-			var tampil = 0;
-
-			baris.forEach( function ( b ) {
-				var cocokKata = ! kata || normal( b.textContent ).indexOf( kata ) !== -1;
-				var milik = ( b.getAttribute( 'data-kampus' ) || '' ).split( ' ' );
-				var cocokKampus = ! kampus.length || kampus.some( function ( k ) {
-					return milik.indexOf( k ) !== -1;
-				} );
-
-				var lolos = cocokKata && cocokKampus;
-				b.hidden = ! lolos;
-
-				if ( lolos ) {
-					tampil++;
-				}
-			} );
-
-			pesanKosong( jadwal, 0 === tampil && baris.length > 0, 'Tidak ada pelatihan yang cocok.' );
-		};
-
-		if ( kotakCari ) {
-			kotakCari.addEventListener( 'input', saring );
+		// Kendali form disesuaikan dengan URL, karena salinan statis selalu
+		// mengirim halaman bawaan tanpa mengetahui parameter.
+		if ( kotakCari && kataURL ) {
+			kotakCari.value = kataURL;
 		}
 
 		centang.forEach( function ( c ) {
-			c.addEventListener( 'change', saring );
+			c.checked = kampusURL.indexOf( c.value ) !== -1;
 		} );
 
-		Array.prototype.forEach.call( document.querySelectorAll( '.layanan__toolbar, .filter-pelatihan' ), function ( form ) {
-			form.addEventListener( 'submit', function ( event ) {
-				event.preventDefault();
-				saring();
+		var kata = normal( kataURL );
+		var tampil = 0;
+
+		baris.forEach( function ( b ) {
+			var cocokKata = ! kata || normal( b.textContent ).indexOf( kata ) !== -1;
+			var milik = ( b.getAttribute( 'data-kampus' ) || '' ).split( ' ' );
+			var cocokKampus = ! kampusURL.length || kampusURL.some( function ( k ) {
+				return milik.indexOf( k ) !== -1;
 			} );
+
+			var lolos = cocokKata && cocokKampus;
+			b.hidden = ! lolos;
+
+			if ( lolos ) {
+				tampil++;
+			}
 		} );
+
+		pesanKosong( jadwal, 0 === tampil && baris.length > 0, 'Tidak ada pelatihan yang cocok.' );
+
+		/**
+		 * Kotak cari dan daftar kampus berada di dua form terpisah. Mengirim
+		 * salah satunya akan menghapus pilihan yang lain, jadi pengiriman
+		 * ditahan lalu alamat disusun dari kedua form sekaligus.
+		 */
+		function kirim( event ) {
+			event.preventDefault();
+
+			var url = new URLSearchParams();
+			var nilaiCari = kotakCari ? kotakCari.value.trim() : '';
+
+			if ( nilaiCari ) {
+				url.set( 'cari', nilaiCari );
+			}
+
+			centang.forEach( function ( c ) {
+				if ( c.checked ) {
+					url.append( 'kampus[]', c.value );
+				}
+			} );
+
+			var tanya = url.toString();
+			window.location.assign( window.location.pathname + ( tanya ? '?' + tanya : '' ) );
+		}
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll( '.layanan__toolbar, .filter-pelatihan' ),
+			function ( form ) {
+				form.addEventListener( 'submit', kirim );
+			}
+		);
+
+		// Tautan pindah bulan ikut membawa penyaring yang sedang aktif.
+		if ( window.location.search ) {
+			Array.prototype.forEach.call(
+				document.querySelectorAll( '.bulan-nav a, .kalender__nav a' ),
+				function ( a ) {
+					a.setAttribute( 'href', a.getAttribute( 'href' ) + window.location.search );
+				}
+			);
+		}
 	}
 
-	/* ---------- Daftar sertifikat: pencarian nama ---------- */
+	/* ---------- Daftar sertifikat ---------- */
 
 	var daftarSertifikat = document.querySelector( '.sertifikat' );
 	var kotakNama = document.querySelector( '#cari-nama' );
@@ -93,37 +131,41 @@
 	if ( daftarSertifikat && kotakNama ) {
 		var kartu = Array.prototype.slice.call( daftarSertifikat.querySelectorAll( '.sertifikat-card' ) );
 		var paginasi = document.querySelector( '.paginasi' );
+		var namaURL = params.get( 'nama' ) || '';
 
-		var saringNama = function () {
-			var kata = normal( kotakNama.value );
-			var tampil = 0;
+		if ( namaURL ) {
+			kotakNama.value = namaURL;
+		}
 
-			kartu.forEach( function ( k ) {
-				var lolos = ! kata || normal( k.textContent ).indexOf( kata ) !== -1;
-				k.hidden = ! lolos;
+		var kataNama = normal( namaURL );
+		var tampilNama = 0;
 
-				if ( lolos ) {
-					tampil++;
-				}
-			} );
+		kartu.forEach( function ( k ) {
+			var lolos = ! kataNama || normal( k.textContent ).indexOf( kataNama ) !== -1;
+			k.hidden = ! lolos;
 
-			/* Saat menyaring, paginasi menyesatkan: yang tersaring hanya halaman ini. */
-			if ( paginasi ) {
-				paginasi.hidden = kata.length > 0;
+			if ( lolos ) {
+				tampilNama++;
 			}
+		} );
 
-			pesanKosong(
-				daftarSertifikat.parentElement,
-				0 === tampil && kartu.length > 0,
-				'Tidak ada nama itu di halaman ini. Coba halaman lain.'
-			);
-		};
+		/* Saat menyaring, paginasi menyesatkan: yang tersaring hanya halaman ini. */
+		if ( paginasi ) {
+			paginasi.hidden = kataNama.length > 0;
+		}
 
-		kotakNama.addEventListener( 'input', saringNama );
+		pesanKosong(
+			daftarSertifikat.parentElement,
+			0 === tampilNama && kartu.length > 0,
+			'Tidak ada nama itu di halaman ini. Coba halaman lain.'
+		);
 
 		kotakNama.form.addEventListener( 'submit', function ( event ) {
 			event.preventDefault();
-			saringNama();
+			var nilai = kotakNama.value.trim();
+			window.location.assign(
+				window.location.pathname + ( nilai ? '?nama=' + encodeURIComponent( nilai ) : '' )
+			);
 		} );
 	}
 }() );
