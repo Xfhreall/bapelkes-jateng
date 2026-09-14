@@ -3,6 +3,8 @@
  * Bapelkes Jateng theme setup.
  */
 
+require_once get_theme_file_path( 'inc/masukan.php' );
+
 function bapelkes_setup() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
@@ -30,6 +32,16 @@ function bapelkes_assets() {
 		array( 'bapelkes-fonts' ),
 		filemtime( get_stylesheet_directory() . '/style.css' )
 	);
+
+	if ( is_page_template( 'page-suara-pembaca.php' ) || is_page( 'suara-pembaca' ) ) {
+		wp_enqueue_script(
+			'bapelkes-form',
+			get_theme_file_uri( 'assets/js/form.js' ),
+			array(),
+			filemtime( get_theme_file_path( 'assets/js/form.js' ) ),
+			true
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'bapelkes_assets' );
 
