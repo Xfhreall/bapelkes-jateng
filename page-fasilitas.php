@@ -5,6 +5,7 @@
 get_header();
 
 $kampus = bapelkes_kampus();
+$term_kampus = get_terms( array( 'taxonomy' => 'kampus', 'hide_empty' => false ) );
 $arrow  = get_theme_file_uri( 'assets/icons/arrow-up-right-lg.svg' );
 ?>
 
@@ -17,7 +18,11 @@ $arrow  = get_theme_file_uri( 'assets/icons/arrow-up-right-lg.svg' );
 
 	<div class="fasilitas__grid" data-node-id="40:2369">
 		<?php foreach ( $kampus as $slug => $data ) : ?>
-			<a class="fasilitas-card" href="<?php echo esc_url( home_url( "/fasilitas/{$slug}/" ) ); ?>">
+			<?php
+			$term = get_term_by( 'name', $data['nama'], 'kampus' );
+			$tautan = $term && ! is_wp_error( $term ) ? get_term_link( $term ) : home_url( '/fasilitas/' );
+			?>
+			<a class="fasilitas-card" href="<?php echo esc_url( $tautan ); ?>">
 				<span class="fasilitas-card__head">
 					<span class="fasilitas-card__text">
 						<span class="fasilitas-card__nama"><?php echo esc_html( $data['nama'] ); ?></span>
