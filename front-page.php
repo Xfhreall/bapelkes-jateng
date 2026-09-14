@@ -58,4 +58,6 @@ get_header();
 	</div>
 </section>
 
+<?php get_template_part( 'template-parts/section', 'informasi-terbaru' ); ?>
+
 <?php get_footer(); ?>
