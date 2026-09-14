@@ -12,6 +12,25 @@
 		return;
 	}
 
+	/* ---------- Keadaan tergulir ---------- */
+
+	/*
+	 * Navbar Beranda transparan saat di puncak agar hero terlihat utuh,
+	 * lalu berlatar putih begitu halaman digulir supaya tautan terbaca.
+	 * Dipantau lewat IntersectionObserver, bukan event scroll, agar tidak
+	 * berjalan pada tiap piksel guliran.
+	 */
+	var penanda = document.createElement( 'span' );
+	penanda.setAttribute( 'aria-hidden', 'true' );
+	penanda.style.cssText = 'position:absolute;top:0;left:0;height:1px;width:1px;pointer-events:none';
+	document.body.prepend( penanda );
+
+	if ( 'IntersectionObserver' in window ) {
+		new IntersectionObserver( function ( entri ) {
+			area.classList.toggle( 'is-scrolled', ! entri[ 0 ].isIntersecting );
+		} ).observe( penanda );
+	}
+
 	/* ---------- Menu lipat ---------- */
 
 	var tombol = area.querySelector( '.nav-toggle' );

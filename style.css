@@ -66,16 +66,51 @@ a {
 /* ---------- Navbar ---------- */
 
 .site-header-area {
-	position: absolute;
+	position: sticky;
 	top: 0;
 	left: 0;
 	z-index: 30;
 	width: 100%;
+	transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Di Beranda navbar melayang di atas hero saat di puncak. Margin negatif
+   setinggi navbar membuatnya tidak memakan ruang, sehingga hero tetap
+   penuh seperti desain, tetapi tetap menempel saat digulir. */
+.site-header-area:not(.site-header-area--solid) {
+	margin-bottom: -89px;
 }
 
 .site-header-area--solid {
-	position: relative;
 	background: var(--bapelkes-white);
+}
+
+/* Begitu digulir, latar jadi putih agar tautan tetap terbaca. */
+.site-header-area.is-scrolled {
+	background: var(--bapelkes-white);
+	box-shadow: 0 1px 0 #eaecf0, 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+.site-header-area.is-scrolled .site-logo img.site-logo__terang {
+	display: none;
+}
+
+.site-header-area.is-scrolled .site-logo img.site-logo__gelap {
+	display: block;
+	top: 0;
+	left: 0.47%;
+	width: 99.94%;
+	height: 100%;
+	object-fit: contain;
+	object-position: left center;
+}
+
+.site-header-area.is-scrolled .nav-links a {
+	color: var(--bapelkes-text-primary);
+}
+
+.site-header-area.is-scrolled .nav-links .menu-item-has-children > a::after {
+	filter: brightness(0) opacity(0.62);
 }
 
 .site-header {
@@ -141,19 +176,62 @@ a {
 }
 
 .nav-links a {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: 2px;
+	padding-bottom: 4px;
 	color: var(--bapelkes-gray-50);
 	font-size: 14px;
 	font-weight: 500;
 	line-height: normal;
+	transition: color 0.18s ease, text-shadow 0.18s ease;
+}
+
+/* Garis bawah tumbuh dari tengah saat kursor mendekat. */
+.nav-links a::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 2px;
+	border-radius: 2px;
+	background: var(--bapelkes-brand-gradient);
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform 0.22s ease;
+}
+
+.nav-links a:hover::before,
+.nav-links a:focus-visible::before,
+.nav-links .current-menu-item > a::before,
+.nav-links .is-active > a::before {
+	transform: scaleX(1);
+}
+
+/*
+ * Menebalkan huruf saat hover memakai text-shadow, bukan font-weight:
+ * mengubah ketebalan font menggeser lebar tautan dan seluruh baris navbar
+ * ikut bergoyang. Item aktif memakai bold sungguhan karena dirender server
+ * dan lebarnya sudah tetap sejak awal.
+ */
+.nav-links a:hover,
+.nav-links a:focus-visible {
+	text-shadow: 0 0 0.5px currentColor, 0 0 0.5px currentColor;
 }
 
 .nav-links .current-menu-item > a,
 .nav-links .is-active > a {
 	color: var(--bapelkes-white);
 	font-weight: 700;
+}
+
+.site-header-area.is-scrolled .nav-links .current-menu-item > a,
+.site-header-area.is-scrolled .nav-links .is-active > a,
+.site-header--solid .nav-links .current-menu-item > a,
+.site-header--solid .nav-links .is-active > a {
+	color: var(--bapelkes-text-primary);
 }
 
 .nav-links .menu-item-has-children > a::after {
@@ -4073,7 +4151,9 @@ html {
 	   jadi semua halaman memakai navbar padat. */
 	.site-header-area,
 	.site-header-area--solid {
-		position: relative;
+		position: sticky;
+		top: 0;
+		margin-bottom: 0;
 		background: var(--bapelkes-white);
 	}
 
