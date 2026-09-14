@@ -3386,6 +3386,8 @@ a {
 	display: block;
 	width: 24px;
 	height: 24px;
+	/* chevron-down.svg strokenya #F9FAFB, tak terlihat di latar terang. */
+	filter: brightness(0) opacity(0.62);
 	transition: transform 0.15s ease;
 }
 
@@ -3923,6 +3925,8 @@ html {
 
 /* Target sentuh minimal 44px pada perangkat tanpa penunjuk presisi. */
 @media (pointer: coarse) {
+	.site-logo,
+	.site-footer__logo,
 	.nav-links a,
 	.filters a,
 	.footer-column__links a,
@@ -3937,8 +3941,11 @@ html {
 		align-items: center;
 	}
 
-	.bulan-nav__tombol {
+	.bulan-nav__tombol,
+	.kalender__nav a {
 		padding: 10px;
+		min-width: 44px;
+		justify-content: center;
 	}
 
 	.filter-pelatihan__baris {
@@ -4452,5 +4459,31 @@ textarea:focus-visible {
 	.site-footer__nav {
 		grid-template-columns: 1fr;
 		gap: 24px;
+	}
+}
+
+@media (max-width: 900px) {
+	/* Bagan organisasi tidak terbaca kalau diciutkan ke lebar ponsel.
+	   Dibuat bisa digeser mendatar di dalam wadahnya sendiri, bukan
+	   memaksa seluruh halaman ikut menggeser. */
+	.profil__struktur-bagan {
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.profil__struktur-bagan img {
+		width: auto;
+		min-width: 720px;
+		max-width: none;
+	}
+
+	.profil__struktur-bagan::after {
+		content: "Geser untuk melihat bagan penuh";
+		display: block;
+		padding-top: 8px;
+		color: var(--bapelkes-text-secondary);
+		font-family: var(--bapelkes-font-display);
+		font-size: 13px;
 	}
 }
