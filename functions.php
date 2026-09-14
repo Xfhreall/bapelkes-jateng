@@ -72,3 +72,27 @@ function bapelkes_default_menu() {
 	}
 	echo '</ul>';
 }
+
+/**
+ * Data tiga kampus. Dipakai section Beranda dan halaman Fasilitas.
+ * ponytail: array statis — hanya tiga dan jarang berubah.
+ */
+function bapelkes_kampus() {
+	return array(
+		'gombong'  => array(
+			'nama'   => 'Kampus Gombong',
+			'alamat' => 'Jl. Yos Sudarso 461, Gombong, Kab. Kebumen, Jawa Tengah.',
+			'gambar' => 'assets/img/kampus-gombong.jpg',
+		),
+		'wonosobo' => array(
+			'nama'   => 'Kampus Wonosobo',
+			'alamat' => "Jl. KH. Hasyim Asy'ari Km. 03, Kalibeber, Kecamatan Mojotengah, Kabupaten Wonosobo.",
+			'gambar' => 'assets/img/kampus-wonosobo.jpg',
+		),
+		'ungaran'  => array(
+			'nama'   => 'Kampus Ungaran',
+			'alamat' => 'Jl. Diponegoro No. 186, Gedanganak / Candirejo, Ungaran Timur/Barat, Kab. Semarang.',
+			'gambar' => 'assets/img/kampus-ungaran.jpg',
+		),
+	);
+}

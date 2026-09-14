@@ -1,10 +1,12 @@
 <?php
 /**
  * Section headline + tiga kampus (Figma 40:1272 dan 40:1275).
- * ponytail: data kampus statis — hanya tiga dan jarang berubah. Jadikan CPT
- * kalau nanti tiap kampus butuh halaman sendiri.
+ * Data kampus berasal dari bapelkes_kampus() agar sama dengan halaman Fasilitas.
  */
 
+$kampus     = bapelkes_kampus();
+$utama      = $kampus['gombong'];
+$pendamping = array( 'wonosobo' => $kampus['wonosobo'], 'ungaran' => $kampus['ungaran'] );
 $kampus_url = home_url( '/fasilitas/' );
 $arrow      = get_theme_file_uri( 'assets/icons/arrow-up-right-lg.svg' );
 ?>
@@ -19,52 +21,34 @@ $arrow      = get_theme_file_uri( 'assets/icons/arrow-up-right-lg.svg' );
 <section class="kampus" data-node-id="40:1275">
 	<a class="kampus__lead" href="<?php echo esc_url( $kampus_url ); ?>">
 		<span class="kampus__lead-title">
-			<span>Kampus Gombong</span>
+			<span><?php echo esc_html( $utama['nama'] ); ?></span>
 			<img src="<?php echo esc_url( $arrow ); ?>" alt="" width="32" height="32">
 		</span>
-		<span class="kampus__lead-address">
-			Jl. Yos Sudarso 461, Gombong, Kab. Kebumen, Jawa Tengah.
-		</span>
+		<span class="kampus__lead-address"><?php echo esc_html( $utama['alamat'] ); ?></span>
 	</a>
 
 	<div class="kampus__grid">
 		<div class="kampus__main">
-			<img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/kampus-gombong.jpg' ) ); ?>"
-				alt="Kampus Gombong" width="567" height="481">
+			<img src="<?php echo esc_url( get_theme_file_uri( $utama['gambar'] ) ); ?>"
+				alt="<?php echo esc_attr( $utama['nama'] ); ?>" width="567" height="481">
 		</div>
 
 		<div class="kampus__side">
-			<a class="kampus-card" href="<?php echo esc_url( $kampus_url ); ?>">
-				<span class="kampus-card__media kampus-card__media--wonosobo">
-					<img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/kampus-wonosobo.jpg' ) ); ?>"
-						alt="Kampus Wonosobo">
-				</span>
-				<span class="kampus-card__text">
-					<span class="kampus-card__title">
-						<span>Kampus Wonosobo</span>
-						<img src="<?php echo esc_url( $arrow ); ?>" alt="" width="32" height="32">
+			<?php foreach ( $pendamping as $slug => $data ) : ?>
+				<a class="kampus-card" href="<?php echo esc_url( $kampus_url ); ?>">
+					<span class="kampus-card__media kampus-card__media--<?php echo esc_attr( $slug ); ?>">
+						<img src="<?php echo esc_url( get_theme_file_uri( $data['gambar'] ) ); ?>"
+							alt="<?php echo esc_attr( $data['nama'] ); ?>">
 					</span>
-					<span class="kampus-card__address">
-						Jl. KH. Hasyim Asy'ari Km. 03, Kalibeber, Kecamatan Mojotengah, Kabupaten Wonosobo.
+					<span class="kampus-card__text">
+						<span class="kampus-card__title">
+							<span><?php echo esc_html( $data['nama'] ); ?></span>
+							<img src="<?php echo esc_url( $arrow ); ?>" alt="" width="32" height="32">
+						</span>
+						<span class="kampus-card__address"><?php echo esc_html( $data['alamat'] ); ?></span>
 					</span>
-				</span>
-			</a>
-
-			<a class="kampus-card" href="<?php echo esc_url( $kampus_url ); ?>">
-				<span class="kampus-card__media kampus-card__media--ungaran">
-					<img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/kampus-ungaran.jpg' ) ); ?>"
-						alt="Kampus Ungaran">
-				</span>
-				<span class="kampus-card__text">
-					<span class="kampus-card__title">
-						<span>Kampus Ungaran</span>
-						<img src="<?php echo esc_url( $arrow ); ?>" alt="" width="32" height="32">
-					</span>
-					<span class="kampus-card__address">
-						Jl. Diponegoro No. 186, Gedanganak / Candirejo, Ungaran Timur/Barat, Kab. Semarang.
-					</span>
-				</span>
-			</a>
+				</a>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
