@@ -34,6 +34,16 @@ function bapelkes_assets() {
 		filemtime( get_stylesheet_directory() . '/style.css' )
 	);
 
+	if ( is_singular( 'pelatihan' ) ) {
+		wp_enqueue_script(
+			'bapelkes-unduhan',
+			get_theme_file_uri( 'assets/js/unduhan.js' ),
+			array(),
+			filemtime( get_theme_file_path( 'assets/js/unduhan.js' ) ),
+			true
+		);
+	}
+
 	if ( is_page_template( 'page-suara-pembaca.php' ) || is_page( 'suara-pembaca' ) ) {
 		wp_enqueue_script(
 			'bapelkes-form',

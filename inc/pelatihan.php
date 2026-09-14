@@ -213,3 +213,100 @@ function bapelkes_pelatihan_bulan( DateTimeImmutable $bulan, array $kampus = arr
 
 	return get_posts( $args );
 }
+
+/**
+ * Penanda jenis lampiran: materi atau sertifikat. Muncul sebagai pilihan di
+ * jendela media, jadi staf tidak perlu mengandalkan pola nama berkas.
+ */
+function bapelkes_field_jenis_lampiran( $form_fields, $post ) {
+	$nilai = get_post_meta( $post->ID, '_bapelkes_jenis', true );
+
+	$form_fields['bapelkes_jenis'] = array(
+		'label' => __( 'Jenis berkas Bapelkes', 'bapelkes' ),
+		'input' => 'html',
+		'html'  => sprintf(
+			'<select name="attachments[%1$d][bapelkes_jenis]" id="attachments-%1$d-bapelkes_jenis">
+				<option value="materi" %2$s>Materi</option>
+				<option value="sertifikat" %3$s>Sertifikat</option>
+			</select>',
+			$post->ID,
+			selected( $nilai, 'materi', false ),
+			selected( $nilai, 'sertifikat', false )
+		),
+		'helps' => __( 'Menentukan berkas ini masuk daftar materi atau daftar sertifikat.', 'bapelkes' ),
+	);
+
+	return $form_fields;
+}
+add_filter( 'attachment_fields_to_edit', 'bapelkes_field_jenis_lampiran', 10, 2 );
+
+function bapelkes_simpan_jenis_lampiran( $post, $attachment ) {
+	if ( isset( $attachment['bapelkes_jenis'] ) ) {
+		$jenis = in_array( $attachment['bapelkes_jenis'], array( 'materi', 'sertifikat' ), true )
+			? $attachment['bapelkes_jenis']
+			: 'materi';
+
+		update_post_meta( $post['ID'], '_bapelkes_jenis', $jenis );
+	}
+
+	return $post;
+}
+add_filter( 'attachment_fields_to_save', 'bapelkes_simpan_jenis_lampiran', 10, 2 );
+
+/**
+ * Lampiran satu pelatihan menurut jenis.
+ *
+ * @param int    $pelatihan_id ID pelatihan.
+ * @param string $jenis        'materi' atau 'sertifikat'.
+ * @param string $cari         Penyaring nama berkas, dipakai pencarian sertifikat.
+ */
+function bapelkes_lampiran_pelatihan( $pelatihan_id, $jenis, $cari = '' ) {
+	$args = array(
+		'post_type'      => 'attachment',
+		'post_status'    => 'inherit',
+		'post_parent'    => $pelatihan_id,
+		'posts_per_page' => -1,
+		'orderby'        => 'title',
+		'order'          => 'ASC',
+		'meta_query'     => array( array( 'key' => '_bapelkes_jenis', 'value' => $jenis ) ),
+	);
+
+	if ( 'materi' === $jenis ) {
+		// Lampiran lama tanpa penanda dianggap materi.
+		$args['meta_query'] = array(
+			'relation' => 'OR',
+			array( 'key' => '_bapelkes_jenis', 'value' => 'materi' ),
+			array( 'key' => '_bapelkes_jenis', 'compare' => 'NOT EXISTS' ),
+		);
+	}
+
+	if ( '' !== $cari ) {
+		$args['s'] = $cari;
+	}
+
+	return get_posts( $args );
+}
+
+/**
+ * Status pelatihan berdasarkan tanggal hari ini.
+ */
+function bapelkes_status_pelatihan( $pelatihan_id ) {
+	$mulai   = get_post_meta( $pelatihan_id, '_bapelkes_mulai', true );
+	$selesai = get_post_meta( $pelatihan_id, '_bapelkes_selesai', true ) ?: $mulai;
+
+	if ( ! $mulai ) {
+		return array( 'jadwal', __( 'Belum dijadwalkan', 'bapelkes' ) );
+	}
+
+	$hari_ini = wp_date( 'Y-m-d' );
+
+	if ( $hari_ini < $mulai ) {
+		return array( 'akan', __( 'Akan datang', 'bapelkes' ) );
+	}
+
+	if ( $hari_ini > $selesai ) {
+		return array( 'selesai', __( 'Selesai', 'bapelkes' ) );
+	}
+
+	return array( 'berlangsung', __( 'Berlangsung', 'bapelkes' ) );
+}
