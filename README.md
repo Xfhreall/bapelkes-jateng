@@ -6,14 +6,24 @@ Pratinjau statis: https://dev-bapelkes-jateng.xfhreall.workers.dev (isinya data 
 
 ## Kebutuhan
 
-- PHP 8.0 atau lebih baru
-- WordPress 6.5 atau lebih baru
-- [WP-CLI](https://wp-cli.org/)
-- MySQL/MariaDB, atau SQLite lewat plugin `sqlite-database-integration` (cara yang dipakai penulis, tanpa service database)
+- PHP 8.0 atau lebih baru, dengan ekstensi `pdo_sqlite`, `mbstring`, `xml`, `curl`. Cek SQLite dengan `php -m | grep -i sqlite`.
+- WordPress 6.5 atau lebih baru (diunduh oleh skrip di bawah)
+- [WP-CLI](https://wp-cli.org/), `git`, `curl`, `unzip`
+- Database: SQLite lewat plugin `sqlite-database-integration` (dipakai di bawah, tanpa service database), atau MySQL/MariaDB biasa
+
+Sistem operasi:
+
+| OS | Cara |
+|---|---|
+| Linux | Jalankan skrip di bawah. |
+| macOS | Pasang `brew install php wp-cli git`, lalu jalankan skrip di bawah. |
+| Windows | Pakai [WSL2](https://learn.microsoft.com/windows/wsl/install) (Ubuntu) dan jalankan semua di terminal WSL. WP-CLI tidak mendukung Windows secara resmi, dan skrip di bawah berupa bash. Tanpa WSL, ikuti jalur manual di bawah skrip. |
+
+Skrip sudah diuji penuh di Linux (Fedora, PHP 8.5, WP-CLI 2.12). macOS dan WSL memakai perintah yang sama, tetapi belum diuji langsung.
 
 ## Pasang lingkungan lokal
 
-Langkah di bawah memakai SQLite. Kalau Anda memilih MySQL/MariaDB, lewati langkah 2, isi kredensial database asli pada langkah 1, lalu jalankan `wp db create`.
+Langkah di bawah memakai SQLite. Kalau Anda memilih MySQL/MariaDB, ganti langkah 2 dengan membuat database kosong, isi kredensial aslinya di `wp config create` (tanpa `--skip-check`), dan lanjut ke langkah 3.
 
 ```bash
 mkdir bapelkes && cd bapelkes
@@ -23,8 +33,9 @@ wp core download
 wp config create --dbname=wp_dev --dbuser=wp --dbpass=wp --skip-check
 wp config set BAPELKES_DEMO true --raw
 
-# 2. SQLite
-wp plugin install sqlite-database-integration
+# 2. SQLite (diunduh langsung; "wp plugin install" butuh database yang belum ada)
+curl -sSL -o sqlite.zip https://downloads.wordpress.org/plugin/sqlite-database-integration.zip
+unzip -q sqlite.zip -d wp-content/plugins && rm sqlite.zip
 cp wp-content/plugins/sqlite-database-integration/db.copy wp-content/db.php
 
 # 3. Tema
@@ -61,10 +72,20 @@ wp server --host=127.0.0.1 --port=8080
 
 Buka http://127.0.0.1:8080. Login admin di `/wp-login.php` dengan `admin` / `admin` (khusus lokal, jangan pakai di server publik).
 
-Catatan mesin:
+Jalur manual tanpa WP-CLI (Windows tanpa WSL): pasang WordPress lewat [Laragon](https://laragon.org/) atau [LocalWP](https://localwp.com/), clone repo ini ke folder `wp-content/themes/bapelkes-jateng`, lalu aktifkan tema di Appearance > Themes. Setelah itu:
 
-- Fedora memberi `memory_limit=128M`, dan angka itu membuat `wp core download` fatal. Jalankan `export WP_CLI_PHP_ARGS='-d memory_limit=512M'` lebih dulu.
+1. Settings > Permalinks: pilih "Post name".
+2. Buat 10 halaman dengan judul dan slug persis seperti daftar di langkah 5.
+3. Settings > Reading: halaman depan "Beranda", halaman posting "Publikasi".
+4. Tambahkan konstanta `define( 'BAPELKES_DEMO', true );` di `wp-config.php` bila ingin pita pratinjau.
+
+Masalah yang sering muncul:
+
+- `Allowed memory size ... exhausted` saat `wp core download`: batas memori CLI PHP (bawaan 128M) terlalu kecil. Jalankan WP-CLI dengan `php -d memory_limit=512M $(which wp) core download`, atau naikkan `memory_limit` di `php.ini` CLI.
+- `Error establishing a database connection` saat langkah 2: `db.php` belum tersalin, atau ekstensi `pdo_sqlite` belum terpasang.
+- Peringatan `sendmail: No such file` saat `wp core install` dan peringatan `.htaccess` saat `wp rewrite`: abaikan.
 - Dengan SQLite, `wp db query` selalu error karena WP-CLI memanggil klien MariaDB. Abaikan.
+- `/pelatihan/` memberi 404: tipe konten itu sengaja tanpa halaman arsip. Daftar pelatihan ada di `/layanan/`.
 
 ## Struktur
 
