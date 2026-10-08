@@ -8,6 +8,7 @@ require_once get_theme_file_path( 'inc/pelatihan.php' );
 require_once get_theme_file_path( 'inc/konten-halaman.php' );
 require_once get_theme_file_path( 'inc/fasilitas.php' );
 require_once get_theme_file_path( 'inc/rute.php' );
+require_once get_theme_file_path( 'inc/instagram.php' );
 
 function bapelkes_setup() {
 	add_theme_support( 'title-tag' );
