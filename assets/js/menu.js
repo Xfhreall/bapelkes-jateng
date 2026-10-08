@@ -44,6 +44,7 @@
 			tombol.setAttribute( 'aria-expanded', 'false' );
 		}
 		document.body.classList.remove( 'menu-terbuka' );
+		lipatSemua( null );
 	}
 
 	if ( tombol && nav ) {
@@ -53,6 +54,43 @@
 			document.body.classList.toggle( 'menu-terbuka', terbuka );
 		} );
 	}
+
+	var layarKecil = window.matchMedia( '(max-width: 900px)' );
+	var induk = Array.prototype.slice.call( area.querySelectorAll( '.nav-links .menu-item-has-children' ) );
+
+	function lipatSemua( kecuali ) {
+		induk.forEach( function ( li ) {
+			if ( li !== kecuali ) {
+				li.classList.remove( 'is-expanded' );
+				li.firstElementChild.setAttribute( 'aria-expanded', 'false' );
+			}
+		} );
+	}
+
+	induk.forEach( function ( li, i ) {
+		var pemicu = li.firstElementChild;
+		var sub = li.querySelector( ':scope > .sub-menu' );
+
+		if ( ! sub ) {
+			return;
+		}
+
+		sub.id = sub.id || 'sub-menu-' + i;
+
+		pemicu.addEventListener( 'click', function ( event ) {
+			if ( ! layarKecil.matches ) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
+
+			var terbuka = li.classList.toggle( 'is-expanded' );
+			pemicu.setAttribute( 'aria-expanded', terbuka ? 'true' : 'false' );
+			pemicu.setAttribute( 'aria-controls', sub.id );
+			lipatSemua( li );
+		} );
+	} );
 
 	/* ---------- Dropdown ---------- */
 
@@ -87,6 +125,10 @@
 	}
 
 	function buka( p ) {
+		if ( layarKecil.matches ) {
+			return;
+		}
+
 		clearTimeout( tundaTutup );
 		panel.forEach( function ( lain ) {
 			if ( lain !== p ) {

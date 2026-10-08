@@ -249,6 +249,11 @@ a {
 	width: 24px;
 	height: 24px;
 	background: url("assets/icons/chevron-down.svg") no-repeat center / contain;
+	transition: transform 0.2s ease;
+}
+
+.nav-links .sub-menu {
+	display: none;
 }
 
 /* ---------- Hero ---------- */
@@ -1170,27 +1175,6 @@ a {
 	color: var(--bapelkes-text-secondary);
 	font-family: var(--bapelkes-font-display);
 	font-size: 18px;
-}
-
-.pagination {
-	display: flex;
-	justify-content: center;
-}
-
-.pagination .nav-links {
-	gap: 12px;
-}
-
-.pagination a,
-.pagination .current {
-	color: var(--bapelkes-text-secondary);
-	font-family: var(--bapelkes-font-display);
-	font-size: 14px;
-	font-weight: 500;
-}
-
-.pagination .current {
-	color: #000;
 }
 
 @media (max-width: 1200px) {
@@ -2530,6 +2514,30 @@ a {
 .paginasi__hal--aktif {
 	background: var(--bapelkes-brand-gradient);
 	color: var(--bapelkes-white);
+}
+
+.paginasi__hal--jeda {
+	width: 24px;
+	background: none;
+}
+
+.paginasi--ringkas {
+	justify-content: center;
+	gap: 4px;
+	padding: 0;
+	background: none;
+}
+
+.paginasi__panah {
+	color: var(--bapelkes-text-primary);
+}
+
+.paginasi__panah--mati {
+	color: #d0d5dd;
+}
+
+.paginasi__panah svg {
+	display: block;
 }
 
 /* ---------- Pop up unduhan ---------- */
@@ -4269,8 +4277,36 @@ html {
 		transform: none;
 	}
 
-	.dropdown:not(.is-open) {
+	.dropdown {
 		display: none;
+	}
+
+	.nav-links .is-expanded > a::after {
+		transform: rotate(180deg);
+	}
+
+	.nav-links .is-expanded > .sub-menu {
+		display: block;
+		margin: 0 0 8px;
+		padding: 0 0 0 16px;
+		border-left: 2px solid #f2f4f7;
+		list-style: none;
+	}
+
+	.nav-links .sub-menu li + li {
+		border-top: 0;
+	}
+
+	.nav-links .sub-menu a,
+	.site-header--solid .nav-links .sub-menu a {
+		padding: 12px 0;
+		color: var(--bapelkes-text-secondary);
+		font-size: 15px;
+		font-weight: 500;
+	}
+
+	.nav-links .sub-menu a::before {
+		content: none;
 	}
 
 	.dropdown--ringkas {
@@ -4332,12 +4368,21 @@ html {
 	}
 
 	.post-grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		row-gap: 32px;
 	}
 
+	.news-card {
+		gap: 12px;
+	}
+
+	.news-card__body {
+		gap: 8px;
+	}
+
 	.news-card__media {
-		height: 220px;
+		height: auto;
+		aspect-ratio: 4 / 5;
 	}
 
 	.publikasi,
@@ -4376,6 +4421,20 @@ html {
 		order: -1;
 		flex-wrap: wrap;
 		justify-content: center;
+	}
+
+	.paginasi--ringkas {
+		flex-wrap: nowrap;
+		gap: 4px;
+	}
+
+	.paginasi--ringkas .paginasi__hal {
+		width: 36px;
+		height: 36px;
+	}
+
+	.paginasi--ringkas .paginasi__hal--jeda {
+		width: 20px;
 	}
 
 	/* Tabel jadwal sudah menumpuk; rapatkan agar tidak terlalu tinggi. */

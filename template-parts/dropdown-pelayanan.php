@@ -3,20 +3,7 @@
  * Dropdown "Pelayanan Publik" (Figma 40:3410).
  */
 
-$item = array(
-	array(
-		'ikon'  => 'chart-bar.svg',
-		'judul' => __( 'Pelayanan Publik', 'bapelkes' ),
-		'ket'   => __( 'Kenali komitmen layanan publik kami yang berkualitas.', 'bapelkes' ),
-		'url'   => home_url( '/pelayanan-publik/' ),
-	),
-	array(
-		'ikon'  => 'file.svg',
-		'judul' => __( 'Standar Pelayanan Publik', 'bapelkes' ),
-		'ket'   => __( 'Informasi standar layanan penyelenggaraan pelatihan.', 'bapelkes' ),
-		'url'   => home_url( '/standar-pelayanan/' ),
-	),
-);
+$item = bapelkes_submenu()['Pelayanan Publik'];
 ?>
 
 <div class="dropdown dropdown--ringkas" id="dropdown-pelayanan-publik" data-node-id="40:3410">
