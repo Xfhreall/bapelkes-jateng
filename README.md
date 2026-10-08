@@ -113,6 +113,7 @@ Isi `inc/`:
 | `masukan.php` | Tipe konten `masukan` dan penanganan form Suara Pembaca |
 | `konten-halaman.php` | Kotak "Konten Halaman" di editor, plus tipe konten `pimpinan` |
 | `rute.php` | Rewrite rule path, misalnya `/layanan/2026-10/` |
+| `instagram.php` | Impor post Instagram jadi berita, perintah `wp bapelkes ig-sinkron` |
 
 ## Cara kerja yang perlu Anda tahu
 
@@ -126,7 +127,30 @@ Isi `inc/`:
 
 **Data kampus** (Gombong, Wonosobo, Ungaran) berupa array statis di `bapelkes_kampus()` dalam `functions.php`. Alamat dan foto kampus diubah di sana.
 
-**Konten demo.** Berita, galeri, sertifikat, dan foto kampus yang Anda lihat di lokal hanya data contoh yang dimasukkan lewat admin. Berkas gambar contoh ada di `demo/`. Konten ini tidak masuk database repo dan tidak untuk produksi.
+**Konten demo.** Galeri, sertifikat, foto kampus, dan berita yang Anda tulis manual di lokal hanya data contoh yang dimasukkan lewat admin. Berita hasil impor Instagram berasal dari akun asli Bapelkes. Berkas gambar contoh ada di `demo/`. Konten ini tidak masuk database repo dan tidak untuk produksi.
+
+## Berita dari Instagram
+
+Tema mengambil post publik akun Instagram Bapelkes (bawaan `bapelkesjateng`) dan menyimpannya sebagai post WordPress. Beranda, Publikasi, dan Detail Publikasi lalu menampilkannya seperti berita biasa. Judul berasal dari nama kegiatan di caption, isi berupa caption lengkap dengan tautan ke post aslinya, dan foto diunduh ke media library.
+
+Pengambilan memakai fitur Business Discovery dari Instagram API dengan Facebook Login. Anda membaca akun Bapelkes lewat akun Instagram profesional milik Anda sendiri, jadi Bapelkes tidak perlu memberi akses.
+
+Siapkan sekali:
+
+1. Ubah akun Instagram Anda ke akun profesional (Creator atau Business) di Settings > Account type and tools. Akun profesional selalu publik.
+2. Buat Facebook Page, lalu hubungkan ke akun Instagram tadi di pengaturan Page > Instagram.
+3. Di [developers.facebook.com](https://developers.facebook.com/apps/), buat aplikasi dengan kasus penggunaan "Kelola pesan & konten di Instagram". Di Izin dan fitur, pastikan `instagram_basic`, `instagram_manage_insights`, `pages_show_list`, dan `pages_read_engagement` berstatus "Siap untuk pengujian".
+4. Buka [Graph API Explorer](https://developers.facebook.com/tools/explorer/), pilih aplikasi tadi, tambahkan keempat izin itu, lalu klik Generate Access Token dan izinkan Page beserta akun Instagram Anda.
+5. Token dari Explorer kedaluwarsa dalam satu jam. Klik ikon info di samping token, pilih Open in Access Token Tool, lalu Extend Access Token untuk mendapat token 60 hari.
+6. Tempel token itu di Settings > General > Token akses Meta (Instagram) pada wp-admin, lalu simpan. Jangan commit token ke repo.
+
+Tarik post dengan:
+
+```bash
+wp bapelkes ig-sinkron
+```
+
+Perintah itu mengambil 25 post terbaru dan melewati post yang sudah pernah masuk (penandanya meta `_ig_id`). WP-Cron menjalankan hal yang sama sekali sehari. Pesan `(#10) Application does not have permission` berarti token belum memuat `instagram_manage_insights` atau `pages_read_engagement`. Ulangi langkah 4 sampai 6.
 
 ## Mengerjakan perubahan
 
