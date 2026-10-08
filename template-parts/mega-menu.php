@@ -4,20 +4,7 @@
  */
 
 $kampus = bapelkes_kampus();
-$menu   = array(
-	array(
-		'ikon'  => 'calendar-menu.svg',
-		'judul' => __( 'Kalender Pelatihan', 'bapelkes' ),
-		'ket'   => __( 'Temukan jadwal dan agenda pelatihan kesehatan', 'bapelkes' ),
-		'url'   => home_url( '/layanan/' ),
-	),
-	array(
-		'ikon'  => 'building.svg',
-		'judul' => __( 'Fasilitas Kampus', 'bapelkes' ),
-		'ket'   => __( 'Kenali fasilitas dan lingkungan setiap kampus', 'bapelkes' ),
-		'url'   => home_url( '/fasilitas/' ),
-	),
-);
+$menu   = bapelkes_submenu()['Layanan'];
 ?>
 
 <div class="dropdown mega-menu" id="mega-menu-layanan" data-node-id="40:3366">

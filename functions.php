@@ -8,6 +8,7 @@ require_once get_theme_file_path( 'inc/pelatihan.php' );
 require_once get_theme_file_path( 'inc/konten-halaman.php' );
 require_once get_theme_file_path( 'inc/fasilitas.php' );
 require_once get_theme_file_path( 'inc/rute.php' );
+require_once get_theme_file_path( 'inc/instagram.php' );
 
 function bapelkes_setup() {
 	add_theme_support( 'title-tag' );
@@ -93,13 +94,14 @@ function bapelkes_default_menu() {
 		'Pelayanan Publik' => home_url( '/pelayanan-publik/' ),
 	);
 
-	$dropdowns = array( 'Layanan', 'Pelayanan Publik' );
+	$submenu = bapelkes_submenu();
 
 	echo '<ul class="nav-links">';
 	foreach ( $items as $label => $url ) {
 		$classes = array();
+		$anak    = $submenu[ $label ] ?? array();
 
-		if ( in_array( $label, $dropdowns, true ) ) {
+		if ( $anak ) {
 			$classes[] = 'menu-item-has-children';
 		}
 
@@ -110,14 +112,57 @@ function bapelkes_default_menu() {
 		}
 
 		printf(
-			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a></li>',
+			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_url( $url ),
 			$aktif ? ' aria-current="page"' : '',
 			esc_html( $label )
 		);
+
+		if ( $anak ) {
+			echo '<ul class="sub-menu">';
+			foreach ( $anak as $item ) {
+				printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( $item['url'] ), esc_html( $item['judul'] ) );
+			}
+			echo '</ul>';
+		}
+
+		echo '</li>';
 	}
 	echo '</ul>';
+}
+
+function bapelkes_submenu() {
+	return array(
+		'Layanan'          => array(
+			array(
+				'ikon'  => 'calendar-menu.svg',
+				'judul' => __( 'Kalender Pelatihan', 'bapelkes' ),
+				'ket'   => __( 'Temukan jadwal dan agenda pelatihan kesehatan', 'bapelkes' ),
+				'url'   => home_url( '/layanan/' ),
+			),
+			array(
+				'ikon'  => 'building.svg',
+				'judul' => __( 'Fasilitas Kampus', 'bapelkes' ),
+				'ket'   => __( 'Kenali fasilitas dan lingkungan setiap kampus', 'bapelkes' ),
+				'url'   => home_url( '/fasilitas/' ),
+			),
+		),
+		'Pelayanan Publik' => array(
+			array(
+				'ikon'  => 'chart-bar.svg',
+				'judul' => __( 'Pelayanan Publik', 'bapelkes' ),
+				'ket'   => __( 'Kenali komitmen layanan publik kami yang berkualitas.', 'bapelkes' ),
+				'url'   => home_url( '/pelayanan-publik/' ),
+			),
+			array(
+				'ikon'  => 'file.svg',
+				'judul' => __( 'Standar Pelayanan Publik', 'bapelkes' ),
+				'ket'   => __( 'Informasi standar layanan penyelenggaraan pelatihan.', 'bapelkes' ),
+				'url'   => home_url( '/standar-pelayanan/' ),
+			),
+		),
+	);
 }
 
 /**
@@ -217,3 +262,28 @@ function bapelkes_kelas_demo( $kelas ) {
 }
 add_filter( 'body_class', 'bapelkes_kelas_demo' );
 
+
+function bapelkes_nomor_halaman( $aktif, $total ) {
+	if ( $total <= 7 ) {
+		return range( 1, $total );
+	}
+
+	if ( $aktif <= 3 || $aktif > $total - 3 ) {
+		$nomor = array( 1, 2, 3, $total - 2, $total - 1, $total );
+	} else {
+		$nomor = array( 1, $aktif - 1, $aktif, $aktif + 1, $total );
+	}
+
+	$hasil = array();
+	foreach ( $nomor as $n ) {
+		$sebelum = $hasil ? end( $hasil ) : 0;
+		if ( $n - $sebelum === 2 ) {
+			$hasil[] = $n - 1;
+		} elseif ( $n - $sebelum > 2 ) {
+			$hasil[] = 0;
+		}
+		$hasil[] = $n;
+	}
+
+	return $hasil;
+}
